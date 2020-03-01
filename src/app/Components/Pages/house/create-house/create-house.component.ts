@@ -53,9 +53,6 @@ export class CreateHouseComponent implements OnInit {
     this.categoryHouse.getList().subscribe(next => {
       this.listCategoryHouse = next;
     });
-    // this.categoryRoom.getList().subscribe(next => {
-    //   this.listCategoryRoom = next;
-    // });
   }
 
   transferFormData() {
@@ -66,7 +63,6 @@ export class CreateHouseComponent implements OnInit {
         categoryHouse: {
           id: this.createForm.get('categoryHouse').value
         },
-        // categoryRoom: this.createForm.get('categoryRoom').value,
         amountBathRoom: this.createForm.get('amountBathRoom').value,
         amountBedRoom: this.createForm.get('amountBedRoom').value,
         address: this.createForm.get('address').value,
