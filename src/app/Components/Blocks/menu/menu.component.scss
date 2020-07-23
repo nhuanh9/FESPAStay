@@ -2,16 +2,19 @@
 
 .navbar {
   font-size: 20px;
-  background: rgba(0,0,0,0.85) !important;
+  background: rgba(255,255,255,1) !important;
   border-radius: 0px 0px 25px 0px;
   -moz-border-radius: 0px 0px 25px 0px;
   -webkit-border-radius: 0px 0px 25px 0px;
+  -webkit-box-shadow: 0px 2px 14px -1px rgba(0,0,0,0.72);
+  -moz-box-shadow: 0px 2px 14px -1px rgba(0,0,0,0.72);
+  box-shadow: 0px 2px 14px -1px rgba(0,0,0,0.72);
   border: 0px solid #000000;
 }
 
 .navbar * {
   //font-family: Lobster;
-  color: #fffff7 !important;
+  color: #000000 !important;
 }
 .dropdown-menu > a{
   color: black !important;

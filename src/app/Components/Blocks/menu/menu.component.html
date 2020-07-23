@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light menu fixed-top">
-  <a class="navbar-brand" href=""><img src="https://github.com/nhuanh9/frontendSPA/blob/NAL/src/assets/myLogo2.png?raw=true" height="40px" alt=""></a>
+  <a class="navbar-brand" href=""><img src="https://lh3.googleusercontent.com/Crb_FyLxMkpuhqg9JtN3al6-R-FWKH5eY-k3UUo0tG7ByL574NLWo4hxP6r1u2VJcSMJZ6qEaUN_buOEusHNDG73BmD_U65bI_oFSvYPcGaRMGzpLN4Z7bSJCgoWaQIjViqZ4j2Hg0huloz6Gv4FmbyvfM6hUbdH8kssCK89_EaXmsp8MFgSrlvqa7c7mlWL6SKyoWvDD9AgwUKo8Jyq1ggpfHur3nBQVQO3EN6QeabZ6kmDsa21I2EYENislyo3t0YFkS2Dl-1fGEys1U1dS6q6Ijwj6teh9QOZbIMeD2-LSAuAlcZqAB7l3ooeqRCdnpNu7jQF1xNYx0e-srhzMHmrzc51fVXMJ5E8TrA3btqA-QEiIm_19NBQAvwSsq8DqYV3GXzcSnbHjFLqlVruNAuFYULflfS8G6OryFnWCdmFaHa8vcf8MyDE_kaJf3tg34xbPI6AHXJbmaIixE-Cq3uoXNfrAX9UO0tOJ4yeHEAcBVjkDapguPlLd8682LhYQnmxbI5ETomJa46YOJ9j7K43rDjr-C9u4IVzIWppiymh0r47ah7_n5JKQPDiq7VJx8l3gjD3LcfeWGLWR8-DLBKta0IOEeesFLYimv9KzGCCq5l4wrUdodgCZqHoiKzYcJ1d6jyJVazqrK0kYhEALUrDCXMuaKC008SGr6Tb9Dp8owVVWVKMFolVyt6lNQ=w848-h898-no?authuser=0" height="40px" alt=""></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="background: white !important;">
     <span class="navbar-toggler-icon" style="color: white !important;"></span>
@@ -28,13 +28,13 @@
       <button type="submit" class="btn btn-outline-light "><i class="fas fa-search"></i></button>
     </form>
     <form class="form-inline my-2 my-lg-0" *ngIf="!currentUser">
-      <button type="button" class="btn btn-outline-light mr-sm-2 " routerLink="login">Đăng nhập</button>
-      <button type="button" class="btn btn-outline-light" routerLink="register">Đăng ký</button>
+      <button type="button" class="btn btn-outline-dark mr-sm-2 " routerLink="login">Đăng nhập</button>
+      <button type="button" class="btn btn-outline-dark" routerLink="register">Đăng ký</button>
     </form>
     <div *ngIf="currentUser">
-      <a (click)="logout()" class="btn btn-outline-light">Đăng suất</a>
+      <a (click)="logout()" class="btn btn-outline-dark">Đăng suất</a>
 
-      <a [routerLink]="['/user/profile',currentUser.id]" class="btn btn-outline-light ml-2">
+      <a [routerLink]="['/user/profile',currentUser.id]" class="btn btn-outline-dark ml-2">
         TTCN
       </a>
     </div>
