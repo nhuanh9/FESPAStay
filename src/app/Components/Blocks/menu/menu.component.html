@@ -1,7 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light menu fixed-top">
-  <a class="navbar-brand" href=""><img src="https://lh3.googleusercontent.com/Crb_FyLxMkpuhqg9JtN3al6-R-FWKH5eY-k3UUo0tG7ByL574NLWo4hxP6r1u2VJcSMJZ6qEaUN_buOEusHNDG73BmD_U65bI_oFSvYPcGaRMGzpLN4Z7bSJCgoWaQIjViqZ4j2Hg0huloz6Gv4FmbyvfM6hUbdH8kssCK89_EaXmsp8MFgSrlvqa7c7mlWL6SKyoWvDD9AgwUKo8Jyq1ggpfHur3nBQVQO3EN6QeabZ6kmDsa21I2EYENislyo3t0YFkS2Dl-1fGEys1U1dS6q6Ijwj6teh9QOZbIMeD2-LSAuAlcZqAB7l3ooeqRCdnpNu7jQF1xNYx0e-srhzMHmrzc51fVXMJ5E8TrA3btqA-QEiIm_19NBQAvwSsq8DqYV3GXzcSnbHjFLqlVruNAuFYULflfS8G6OryFnWCdmFaHa8vcf8MyDE_kaJf3tg34xbPI6AHXJbmaIixE-Cq3uoXNfrAX9UO0tOJ4yeHEAcBVjkDapguPlLd8682LhYQnmxbI5ETomJa46YOJ9j7K43rDjr-C9u4IVzIWppiymh0r47ah7_n5JKQPDiq7VJx8l3gjD3LcfeWGLWR8-DLBKta0IOEeesFLYimv9KzGCCq5l4wrUdodgCZqHoiKzYcJ1d6jyJVazqrK0kYhEALUrDCXMuaKC008SGr6Tb9Dp8owVVWVKMFolVyt6lNQ=w848-h898-no?authuser=0" height="40px" alt=""></a>
+  <a class="navbar-brand" href=""><img
+    src="https://lh3.googleusercontent.com/Crb_FyLxMkpuhqg9JtN3al6-R-FWKH5eY-k3UUo0tG7ByL574NLWo4hxP6r1u2VJcSMJZ6qEaUN_buOEusHNDG73BmD_U65bI_oFSvYPcGaRMGzpLN4Z7bSJCgoWaQIjViqZ4j2Hg0huloz6Gv4FmbyvfM6hUbdH8kssCK89_EaXmsp8MFgSrlvqa7c7mlWL6SKyoWvDD9AgwUKo8Jyq1ggpfHur3nBQVQO3EN6QeabZ6kmDsa21I2EYENislyo3t0YFkS2Dl-1fGEys1U1dS6q6Ijwj6teh9QOZbIMeD2-LSAuAlcZqAB7l3ooeqRCdnpNu7jQF1xNYx0e-srhzMHmrzc51fVXMJ5E8TrA3btqA-QEiIm_19NBQAvwSsq8DqYV3GXzcSnbHjFLqlVruNAuFYULflfS8G6OryFnWCdmFaHa8vcf8MyDE_kaJf3tg34xbPI6AHXJbmaIixE-Cq3uoXNfrAX9UO0tOJ4yeHEAcBVjkDapguPlLd8682LhYQnmxbI5ETomJa46YOJ9j7K43rDjr-C9u4IVzIWppiymh0r47ah7_n5JKQPDiq7VJx8l3gjD3LcfeWGLWR8-DLBKta0IOEeesFLYimv9KzGCCq5l4wrUdodgCZqHoiKzYcJ1d6jyJVazqrK0kYhEALUrDCXMuaKC008SGr6Tb9Dp8owVVWVKMFolVyt6lNQ=w848-h898-no?authuser=0"
+    height="40px" alt=""></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="background: white !important;">
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+          style="background: white !important;">
     <span class="navbar-toggler-icon" style="color: white !important;"></span>
   </button>
 
@@ -10,14 +13,44 @@
       <li class="nav-item active">
         <a class="nav-link" routerLink=""> Trang chủ <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link">Khu vực</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          Loại nhà
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Gia đình</a>
+          <a class="dropdown-item" href="#">Một mình</a>
+          <!--          <div class="dropdown-divider"></div>-->
+          <a class="dropdown-item" href="#">2 người</a>
+        </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link">Loại nhà</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          Đánh giá
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">5 sao</a>
+          <a class="dropdown-item" href="#">4 sao</a>
+          <!--          <div class="dropdown-divider"></div>-->
+          <a class="dropdown-item" href="#">3 sao</a>
+          <a class="dropdown-item" href="#">2 sao</a>
+          <a class="dropdown-item" href="#">1 sao</a>
+        </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link">Giá chỗ ở</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          Khu vực
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Hà Nội</a>
+          <a class="dropdown-item" href="#">Tp. Hồ Chí Minh</a>
+          <!--          <div class="dropdown-divider"></div>-->
+          <a class="dropdown-item" href="#">Đà Nẵng</a>
+          <a class="dropdown-item" href="#">Sapa</a>
+        </div>
       </li>
       <li class="nav-item">
 
