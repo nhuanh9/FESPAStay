@@ -25,19 +25,20 @@ export class CreateHouseComponent implements OnInit {
   createForm: FormGroup;
   currentUser: User;
   listCategoryHouse: CategoryHouse[];
+  categoryHouse: CategoryHouse;
 
   constructor(private houseService: HouseService,
               private  router: Router,
               private db: AngularFireDatabase,
               private fb: FormBuilder,
-              private categoryHouse: CategoryHouseService,
+              private categoryHouseService: CategoryHouseService,
               private authenticationService: AuthenticationService,
               private userService: UserService
               // private categoryRoom: CategoryRoomService,
   ) {
   }
 
-  ngOnInit() {
+  prepareForm() {
     this.createForm = this.fb.group({
       hostName: ['', [Validators.required]],
       nameHouse: ['', [Validators.required]],
@@ -50,54 +51,57 @@ export class CreateHouseComponent implements OnInit {
       rooms: ['', [Validators.required]],
       description: ['', [Validators.required]]
     });
-    this.categoryHouse.getList().subscribe(next => {
+  }
+
+  getListCategoryHouse() {
+    this.categoryHouseService.getList().subscribe(next => {
       this.listCategoryHouse = next;
     });
   }
 
-  transferFormData() {
-    this.authenticationService.currentUser.subscribe(value => {
-      this.house = {
-        hostName: this.createForm.get('hostName').value,
-        nameHouse: this.createForm.get('nameHouse').value,
-        categoryHouse: {
-          id: this.createForm.get('categoryHouse').value
-        },
-        amountBathRoom: this.createForm.get('amountBathRoom').value,
-        amountBedRoom: this.createForm.get('amountBedRoom').value,
-        address: this.createForm.get('address').value,
-        description: this.createForm.get('description').value,
-        imageUrls: this.arrayPicture
-      };
-      this.userService.userDetail(value.id + '').subscribe(result => {
-        this.house.hostName = result.username;
-      });
-    });
+  ngOnInit() {
+    this.prepareForm();
+    this.getListCategoryHouse();
+  }
+
+  setCategoryForFormData() {
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.listCategoryHouse.length; i++) {
+      if (this.listCategoryHouse[i].id == this.createForm.get('categoryHouse').value) {
+        this.categoryHouse = this.listCategoryHouse[i];
+      }
+    }
+  }
+
+  setData() {
+    this.house = {
+      hostName: this.createForm.get('hostName').value,
+      nameHouse: this.createForm.get('nameHouse').value,
+      categoryHouse: this.categoryHouse,
+      // categoryRoom: this.createForm.get('categoryRoom').value,
+      amountBathRoom: this.createForm.get('amountBathRoom').value,
+      amountBedRoom: this.createForm.get('amountBedRoom').value,
+      address: this.createForm.get('address').value,
+      description: this.createForm.get('description').value,
+      imageUrls: this.arrayPicture
+    };
+  }
+
+  returnHome() {
+    this.router.navigate(['/']);
   }
 
   createHouse() {
     this.authenticationService.currentUser.subscribe(value => {
-      this.house = {
-        hostName: this.createForm.get('hostName').value,
-        nameHouse: this.createForm.get('nameHouse').value,
-        categoryHouse: {
-          id: this.createForm.get('categoryHouse').value
-        },
-        // categoryRoom: this.createForm.get('categoryRoom').value,
-        amountBathRoom: this.createForm.get('amountBathRoom').value,
-        amountBedRoom: this.createForm.get('amountBedRoom').value,
-        address: this.createForm.get('address').value,
-        description: this.createForm.get('description').value,
-        imageUrls: this.arrayPicture
-      };
+      this.setCategoryForFormData();
+      this.setData();
       this.userService.userDetail(value.id + '').subscribe(result => {
         this.house.hostName = result.username;
-        // this.house.user = result;
         this.currentUser = result;
         console.log(this.house);
         this.houseService.create(this.currentUser.id, this.house).subscribe(() => {
           alert('Thêm thành công!');
-          this.router.navigate(['/']);
+          this.returnHome();
         }, error1 => {
           console.log('Lỗi ' + error1);
         });
