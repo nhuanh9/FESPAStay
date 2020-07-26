@@ -38,7 +38,11 @@ export class HouseService {
     return this.http.post<Room>(this.API_URL + `/${idHouse}/room`, room);
   }
 
-  searchAddress(address): Observable<House> {
-    return this.http.post<House>(this.API_URL + `search`, address);
+  searchAddress(address): Observable<House[]> {
+    return this.http.post<House[]>(this.API_URL + `search`, address);
+  }
+
+  searchCategory(category): Observable<House[]> {
+    return this.http.post<House[]>(this.API_URL + `/search-by-category`, category);
   }
 }

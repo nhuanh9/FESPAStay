@@ -29,12 +29,13 @@ export class EditHouseComponent implements OnInit {
   rooms: Room[];
   idHouse: any;
   listCategoryHouse: CategoryHouse[];
+  categoryHouse: CategoryHouse;
 
   constructor(private houseService: HouseService,
               private  router: Router,
               private db: AngularFireDatabase,
               private fb: FormBuilder,
-              private categoryHouse: CategoryHouseService,
+              private categoryHouseService: CategoryHouseService,
               private authenticationService: AuthenticationService,
               private userService: UserService,
               private activateRoute: ActivatedRoute,
@@ -42,22 +43,7 @@ export class EditHouseComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
-    this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
-      const id = paraMap.get('id');
-      this.houseService.detail(id).subscribe(next => {
-        this.house = next;
-        this.idHouse = this.house.id;
-      }, error1 => {
-        console.log(error1);
-      });
-      this.roomService.getList().subscribe(next => {
-        this.rooms = next;
-        console.log(this.rooms);
-      }, error => {
-        console.log(error);
-      });
-    });
+  prepareForm() {
     this.editForm = this.fb.group({
       hostName: ['', [Validators.required]],
       nameHouse: ['', [Validators.required]],
@@ -69,40 +55,66 @@ export class EditHouseComponent implements OnInit {
       rooms: ['', [Validators.required]],
       description: ['', [Validators.required]]
     });
-    this.categoryHouse.getList().subscribe(next => {
+  }
+
+  getListCategoryHouse() {
+    this.categoryHouseService.getList().subscribe(next => {
       this.listCategoryHouse = next;
     });
   }
 
-  transferFormData() {
-    this.authenticationService.currentUser.subscribe(value => {
-      this.house = {
-        hostName: this.editForm.get('hostName').value,
-        nameHouse: this.editForm.get('nameHouse').value,
-        categoryHouse: {
-          id: this.editForm.get('categoryHouse').value
-        },
-        amountBathRoom: this.editForm.get('amountBathRoom').value,
-        amountBedRoom: this.editForm.get('amountBedRoom').value,
-        address: this.editForm.get('address').value,
-        description: this.editForm.get('description').value,
-        imageUrls: this.arrayPicture
-      };
-      this.userService.userDetail(value.id + '').subscribe(result => {
-        this.house.hostName = result.username;
-      });
+  getHouseById(id) {
+    this.houseService.detail(id).subscribe(next => {
+      this.house = next;
+      this.idHouse = this.house.id;
     });
+  }
+
+  getListRoom() {
+    this.roomService.getList().subscribe(next => {
+      this.rooms = next;
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  getHouse() {
+    this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
+      const id = paraMap.get('id');
+      this.getHouseById(id);
+      this.getListRoom();
+    });
+  }
+
+  ngOnInit() {
+    this.getHouse();
+    this.prepareForm();
+    this.getListCategoryHouse();
+  }
+
+  setCategoryForFormData() {
+    // tslint:disable-next-line:prefer-for-of
+    let newCategoryHouse = this.editForm.get('categoryHouse').value;
+    console.log(newCategoryHouse)
+    if (newCategoryHouse === '') {
+      this.categoryHouse = this.house.categoryHouse;
+    } else {
+      for (let i = 0; i < this.listCategoryHouse.length; i++) {
+        if (this.listCategoryHouse[i].id == newCategoryHouse) {
+          this.categoryHouse = this.listCategoryHouse[i];
+        }
+      }
+    }
   }
 
   editHouse() {
     this.authenticationService.currentUser.subscribe(value => {
       this.userService.userDetail(value.id + '').subscribe(result => {
+        this.setCategoryForFormData();
         const house: House = {
           hostName: this.editForm.get('hostName').value,
           nameHouse: this.editForm.get('nameHouse').value,
-          categoryHouse: {
-            id: this.editForm.get('categoryHouse').value
-          },
+          categoryHouse: this.categoryHouse,
           amountBathRoom: this.editForm.get('amountBathRoom').value,
           amountBedRoom: this.editForm.get('amountBedRoom').value,
           address: this.editForm.get('address').value,

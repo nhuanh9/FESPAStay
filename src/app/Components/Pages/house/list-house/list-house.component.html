@@ -3,23 +3,80 @@
   <div class="">
     <h3></h3>
   </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light menu">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1"
+            aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"
+            style="background: white !important;">
+      <span class="navbar-toggler-icon" style="color: white !important;"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Loại nơi ở
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+            <a class="dropdown-item" href="#" *ngFor="let category of listCategoryHouse"
+               (click)="searchByCategory(category.name)">{{category.name}}</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Đánh giá
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">5 sao</a>
+            <a class="dropdown-item" href="#">4 sao</a>
+            <a class="dropdown-item" href="#">3 sao</a>
+            <a class="dropdown-item" href="#">2 sao</a>
+            <a class="dropdown-item" href="#">1 sao</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            Khu vực
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Hà Nội</a>
+            <a class="dropdown-item" href="#">Tp. Hồ Chí Minh</a>
+            <!--          <div class="dropdown-divider"></div>-->
+            <a class="dropdown-item" href="#">Đà Nẵng</a>
+            <a class="dropdown-item" href="#">Sapa</a>
+          </div>
+        </li>
+        <li class="nav-item">
+
+        </li>
+      </ul>
+<!--      <form class="form-inline mr-2">-->
+<!--        &lt;!&ndash;    <form class="form-inline mr-2" formGroup="search" (ngSubmit)="search()">&ndash;&gt;-->
+<!--        &lt;!&ndash;      <input type="text" class="form-control " formControlName="addressSearch" style="color: black !important;">&ndash;&gt;-->
+<!--        <input type="text" class="form-control " style="color: black !important;">-->
+<!--        <button type="submit" class="btn btn-outline-light "><i class="fas fa-search"></i></button>-->
+<!--      </form>-->
+      </div>
+  </nav>
+
 </div>
 <div class="row ml-2 mr-3">
+  <div *ngIf="!message" class="alert alert-secondary col-11 m-5 text-center" role="alert">
+    Không có kết quả nào phù hợp!
+  </div>
   <div class="col-xs-6 col-sm-4 col-lg-3 mt-3 house " style="padding-right: 0px;"
        *ngFor="let house of listHouse | paginate: { itemsPerPage: 8, currentPage: p }">
     <div class="thumbnail">
       <a [routerLink]="['/user/house/detail-house', house.id]">
         <img width="100%" height="220px" style="border-radius: 2px" src="{{house.imageUrls}}" class="imgProduct">
-        <!--        <h1 class="booked" style=" " *ngIf="house.statusHouse">Booked </h1>-->
       </a>
       <div style="z-index: 2; position: inherit;">
         <div class="productName m-3">
           <a [routerLink]="['/user/house/detail-house', house.id]" style="color: #000000;"><h4>{{house.nameHouse}}</h4>
           </a>
         </div>
-        <!--        <div class="order">-->
-        <!--          <a [routerLink]="['/user/house/detail-house', house.id]" class="btn btn-secondary" style="width: 100px;">Chi tiết</a>-->
-        <!--        </div>-->
       </div>
     </div>
   </div>
@@ -27,4 +84,3 @@
 <div class="text-center">
   <pagination-controls (pageChange)="p = $event" class=" m-3"></pagination-controls>
 </div>
-

@@ -31,10 +31,7 @@ export class DetailRoomComponent implements OnInit {
               private userService: UserService,) {
   }
 
-  ngOnInit() {
-    this.room = {
-      id: ''
-    }
+  loadComment() {
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
       this.roomService.detail(id).subscribe(next => {
@@ -46,6 +43,13 @@ export class DetailRoomComponent implements OnInit {
         console.log(error1);
       });
     });
+  }
+
+  ngOnInit() {
+    this.room = {
+      id: ''
+    }
+    this.loadComment();
     this.commentForm = this.fb.group({
       comment: ['', [Validators.required]]
     });
@@ -61,9 +65,7 @@ export class DetailRoomComponent implements OnInit {
         this.comment.username = result.username;
         this.comment.imageUrls = result.imageUrls;
         this.roomService.addComment(this.room.id, this.comment).subscribe(() => {
-          // alert('Thêm bình luận thành công!');
-          location.reload(true);
-          // this.router.navigate(['/user/room/detail-room/' + this.room.id]);
+          this.loadComment();
         }, error1 => {
           console.log('Lỗi ' + error1);
         });
