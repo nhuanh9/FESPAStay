@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from '../../../../model/user';
 import {Subscription} from 'rxjs';
 import {Order} from '../../../../model/order';
@@ -25,6 +25,7 @@ export class ProfileComponent implements OnInit {
   arrayPicture = '';
   userOrders: Order[];
   userHouses: House[];
+
   constructor(private userService: UserService,
               private router: Router,
               private fb: FormBuilder,
@@ -41,6 +42,11 @@ export class ProfileComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.currentUser = {
+      id: 1,
+      firstName: 'a',
+      lastName: 'b'
+    }
     this.getUserProfile();
   }
 
