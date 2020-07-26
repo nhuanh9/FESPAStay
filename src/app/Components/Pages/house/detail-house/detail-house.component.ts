@@ -23,6 +23,9 @@ export class DetailHouseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.house = {
+      nameHouse: ' '
+    }
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
       this.houseService.detail(id).subscribe(next => {

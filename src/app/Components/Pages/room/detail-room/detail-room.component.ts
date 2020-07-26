@@ -22,6 +22,7 @@ export class DetailRoomComponent implements OnInit {
   comments: CommentToRoom[];
   commentForm: FormGroup;
   comment: CommentToRoom;
+
   constructor(private roomService: RoomService,
               private  router: Router,
               private fb: FormBuilder,
@@ -31,6 +32,9 @@ export class DetailRoomComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.room = {
+      id: ''
+    }
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
       this.roomService.detail(id).subscribe(next => {

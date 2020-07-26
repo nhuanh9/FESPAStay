@@ -43,6 +43,12 @@ export class UpdateUserProfileComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.currentUser = {
+      id: 1,
+      firstName: 'a',
+      lastName: 'b',
+      imageUrls: ''
+    }
     this.getUserProfile();
   }
 
