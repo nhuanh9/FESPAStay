@@ -56,14 +56,6 @@ export class DetailYourHouseComponent implements OnInit {
     });
   }
 
-  bookHouse() {
-    this.houseService.edit(this.house, this.house.id).subscribe(() => {
-      console.log('Edit Thành công!');
-    }, error1 => {
-      console.log('Lỗi ' + error1);
-    });
-  }
-
   addImage() {
     if (this.arrayPicture == '') {
       this.message = false;
@@ -76,6 +68,7 @@ export class DetailYourHouseComponent implements OnInit {
       this.houseImagesService.create(this.image).subscribe(value => {
         alert("Thêm ảnh thành công!");
         this.getImageById(this.house.id);
+        this.arrayPicture = ''
       }, error => {
         console.log("Lỗi " + error);
       })

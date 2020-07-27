@@ -4,10 +4,12 @@
 <div class="row ml-5 mr-5 detail">
   <div class="col-md-6 m-3">
     <div class="row">
-      <img width="100%" src="{{house.imageUrls}}" class="imgProduct mb-3">
+      <img width="100%" src="{{house.imageUrls}}" class="imgProduct mb-1">
     </div>
     <div class="row">
-      <img *ngFor="let image of houseImages" src="{{image.url}}" class="col-3 imageProductSmall p-0 mr-1" width="100%">
+      <div *ngFor="let image of houseImages"  class="col-lg-3 col-md-4 col-sm-4 col-6 imageProductSmall p-0">
+        <img src="{{image.url}}" class="p-1" width="100%" height="100px">
+      </div>
     </div>
   </div>
   <div class="col-md-5">
