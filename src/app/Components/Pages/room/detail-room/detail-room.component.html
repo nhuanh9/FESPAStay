@@ -19,9 +19,7 @@
         <p>Mô tả: {{room.description}} </p>
       </div>
     </div>
-<!--    <a class="btn btn-danger" [routerLink]="['/user/room/edit-room', room.id]">-->
-<!--      Sửa Phòng-->
-<!--    </a>-->
+
     <a class="btn btn-info ml-3" [routerLink]="['/user/room', room.id, 'createOrder']">
       Đặt Phòng
     </a>
@@ -32,10 +30,8 @@
 </div>
 <div class="row ml-4">
   <div class="col-6">
-    <h2>
-      Bình luận
-    </h2>
     <div class="room m-3">
+      <p class="m-2 text-center">Bình luận</p>
       <div class="m-3">
         <div *ngFor="let comment of comments| paginate: { itemsPerPage: 4, currentPage: p }">
           <div class="row mt-3 mr-3 ml-3">

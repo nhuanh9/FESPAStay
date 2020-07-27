@@ -45,14 +45,18 @@ export class DetailRoomComponent implements OnInit {
     });
   }
 
+  prepareFormComment() {
+    this.commentForm = this.fb.group({
+      comment: ['', [Validators.required]]
+    });
+  }
+
   ngOnInit() {
     this.room = {
       id: ''
     }
     this.loadComment();
-    this.commentForm = this.fb.group({
-      comment: ['', [Validators.required]]
-    });
+    this.prepareFormComment();
   }
 
   addComment() {
@@ -66,6 +70,7 @@ export class DetailRoomComponent implements OnInit {
         this.comment.imageUrls = result.imageUrls;
         this.roomService.addComment(this.room.id, this.comment).subscribe(() => {
           this.loadComment();
+          this.prepareFormComment();
         }, error1 => {
           console.log('Lỗi ' + error1);
         });

@@ -1,17 +1,14 @@
-<div class="row m-5 detail">
-  <div class="col-md-6 imageProduct">
-    <p><u>Home >> {{house.nameHouse}}</u></p>
+<div class="row ml-5 name-house">
+  <p>Home > {{house.nameHouse}}</p>
+</div>
+<div class="row ml-5 mr-5 detail">
+  <div class="col-md-6 imageProduct m-3">
     <img width="100%" src="{{house.imageUrls}}" class="imgProduct mb-3">
   </div>
-  <div class="col-md-6">
-    <div class="order-in-detail">
-      <div class="m-3">
-        <b><h2>{{house.nameHouse}}</h2></b>
-        <p><b>100$</b>/đêm</p>
-      </div>
-    </div>
+  <div class="col-md-5">
     <div class="info-house mt-3">
       <div class="m-3">
+        <b><h2>{{house.nameHouse}}</h2></b>
         <p>Chủ nhà: {{house.hostName}}</p>
         <p>Địa chỉ: {{house.address}}</p>
         <p>Số lượng phòng tắm: {{house.amountBathRoom}}</p>
@@ -31,31 +28,42 @@
         </a>
       </div>
     </div>
+    <div class="row">
+      <div class="m-1 ml-3">
+        <button class="btn btn-primary" (click)="addImage()">Thêm Ảnh</button>
+      </div>
+      <div class="m-1">
+        <div class="form-group">
+          <input type="file" class="form-control" (change)="saveImg($event)">
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
-<div class="row mt-3 ml-3">
+<div class="row mt-5 ml-5 mr-5">
   <div class="">
-    <h3>Danh sách các phòng</h3>
+    <h3 style="font-size: 20px">Danh sách các phòng</h3>
   </div>
 </div>
 <div class="" *ngFor="let room of rooms;">
-  <div class="row m-5 room" *ngIf="room.nameHouse === house.nameHouse">
-    <div class="col-3">
-      <img src="{{room.imageUrls}}" class="m-3" width="100%" alt="imgNha1">
+  <div class="row ml-5 mr-5 mb-3 room" *ngIf="room.nameHouse === house.nameHouse">
+    <div class="col-md-3 m-3">
+      <img src="{{room.imageUrls}}" class="" width="100%" alt="imgNha1">
     </div>
-    <div class="col-9">
+    <div class="col-md-8 m-3">
       <div class="row">
-        <div class="m-3">
+        <div class="">
           <h1>{{room.nameRoom}}</h1>
         </div>
       </div>
       <div class="row">
-        <div class=" m-3">
+        <div class="">
           Giá phòng: {{room.priceRoom}}$
         </div>
       </div>
       <div class="row">
-        <div class="m-4">
+        <div class="">
           <a [routerLink]="['/user/room/detail-your-room', room.id]" class="btn btn-secondary"
              style="width: 100px;">Chi tiet</a>
         </div>

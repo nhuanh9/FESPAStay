@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {House} from '../../../../model/House';
 import {Subscription} from 'rxjs';
 import {Room} from '../../../../model/room';
 import {HouseService} from '../../../../Services/house.service';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {RoomService} from '../../../../Services/room.service';
+import * as firebase from "firebase";
+import {HouseImagesService} from "../../../../Services/house-images.service";
+import {HouseImages} from "../../../../model/houseImages";
 
 @Component({
   selector: 'app-detail-your-house',
@@ -15,10 +18,13 @@ export class DetailYourHouseComponent implements OnInit {
   house: House;
   sub: Subscription;
   rooms: Room[];
+  arrayPicture = '';
+  image: HouseImages;
 
   constructor(private houseService: HouseService,
               private activateRoute: ActivatedRoute,
-              private  roomService: RoomService) {
+              private  roomService: RoomService,
+              private houseImagesService: HouseImagesService) {
   }
 
   ngOnInit() {
@@ -46,5 +52,40 @@ export class DetailYourHouseComponent implements OnInit {
     });
   }
 
+  addImage() {
+    this.image = {
+      url: this.arrayPicture,
+      houseId: this.house.id
+    }
+    console.log(this.image);
+    this.houseImagesService.create(this.image).subscribe(value => {
+      alert("Thêm ảnh thành công!");
+    }, error => {
+      console.log("Lỗi " + error);
+    })
+  }
+
+  saveImg(value) {
+    const file = value.target.files;
+    const metadata = {
+      contentType: 'image/jpeg',
+    };
+    const uploadTask = firebase.storage().ref('img/' + Date.now()).put(file[0], metadata);
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      (snapshot) => {
+        // in progress
+        const snap = snapshot as firebase.storage.UploadTaskSnapshot;
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+          this.arrayPicture += downloadURL + ' ';
+          console.log(this.arrayPicture);
+        });
+      }
+    );
+  }
 
 }

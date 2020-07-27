@@ -58,6 +58,8 @@ export class ListHouseComponent implements OnInit {
       if (this.listHouse.length == 0) {
         // alert("Loại: " + category + " không có kết quả nào!");
         this.message = false;
+      } else {
+        this.message = true;
       }
       console.log(value);
     }, error => {

@@ -1,15 +1,16 @@
 .order-in-detail {
-  -webkit-box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
+  border-radius: 5px;
+  border: 1px solid rgba(108, 108, 108, 0.6);
+}
+
+.name-house {
+  margin-top: 50px;
 }
 
 .info-house {
-  //border-radius: 5px 5px 5px 5px;
-  //-moz-border-radius: 5px 5px 5px 5px;
-  //-webkit-border-radius: 5px 5px 5px 5px;
-  //border: 1px solid #000000;
-  //background: rgba(0,0,0,0.01);
+  border-radius: 5px;
+  font-size: 14px;
+  border: 1px solid rgba(108, 108, 108, 0.6);
 }
 
 .detail {
@@ -19,16 +20,13 @@
 .thumbnail {
   position: relative;
   text-align: center;
-  border: 3px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(108, 108, 108, 0.6);
   border-radius: 5px;
-  background: #f2fff3 !important;
-  -webkit-box-shadow: 0px 0px 15px -8px rgb(0, 0, 0);
-  -moz-box-shadow: 0px 0px 15px -8px rgb(0, 0, 0);
-  box-shadow: 0px 0px 15px -8px rgb(0, 0, 0);
 }
 
 img {
   transition: transform .8s;
+  border-radius: 3px;
 }
 
 .house :hover img {
@@ -46,16 +44,13 @@ img {
   transform: translate(-50%, -50%);
   color: rgb(242, 255, 243);
 }
-.imageProduct{
-  -webkit-box-shadow: 0px 0px 8px 0.1px rgba(0,0,0,0.15);
-  -moz-box-shadow: 0px 0px 8px 0.1px rgba(0,0,0,0.15);
-  box-shadow: 0px 0px 8px 0.1px rgba(0,0,0,0.15);
+
+.imageProduct {
+  border-radius: 5px;
 }
 
 
-.room{
-  -webkit-box-shadow: 0px 0px 8px 0.1px rgba(0,0,0,0.15);
-  -moz-box-shadow: 0px 0px 8px 0.1px rgba(0,0,0,0.15);
-  box-shadow: 0px 0px 8px 0.1px rgba(0,0,0,0.15);
-  background: white;
+.room {
+  border: 1px solid rgba(108, 108, 108, 0.6);
+  border-radius: 5px;
 }
