@@ -66,7 +66,7 @@
   <div *ngIf="!message" class="alert alert-secondary col-11 m-5 text-center" role="alert">
     Không có kết quả nào phù hợp!
   </div>
-  <div class="col-xs-6 col-sm-4 col-lg-3 mt-3 house " style="padding-right: 0px;"
+  <div class="col-sm-6 col-lg-4 col-xl-3 mt-3 house " style="padding-right: 0px;"
        *ngFor="let house of listHouse | paginate: { itemsPerPage: 8, currentPage: p }">
     <div class="thumbnail">
       <a [routerLink]="['/user/house/detail-house', house.id]">
