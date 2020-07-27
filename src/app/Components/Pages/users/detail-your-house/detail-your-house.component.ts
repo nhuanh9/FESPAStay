@@ -21,6 +21,7 @@ export class DetailYourHouseComponent implements OnInit {
   arrayPicture = '';
   image: HouseImages;
   message = true;
+  houseImages: HouseImages[];
 
   constructor(private houseService: HouseService,
               private activateRoute: ActivatedRoute,
@@ -28,11 +29,21 @@ export class DetailYourHouseComponent implements OnInit {
               private houseImagesService: HouseImagesService) {
   }
 
+  getImageById(id) {
+    this.houseImagesService.getImagesByIdHouse(id).subscribe(value => {
+      this.houseImages = value;
+      console.log(this.houseImages);
+    }, error => {
+      console.log("Lỗi " + error);
+    })
+  }
+
   ngOnInit() {
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
       this.houseService.detail(id).subscribe(next => {
         this.house = next;
+        this.getImageById(this.house.id);
       }, error1 => {
         console.log(error1);
       });
@@ -57,12 +68,14 @@ export class DetailYourHouseComponent implements OnInit {
     if (this.arrayPicture == '') {
       this.message = false;
     } else {
+      this.message = true;
       this.image = {
         url: this.arrayPicture,
         houseId: this.house.id
       }
       this.houseImagesService.create(this.image).subscribe(value => {
         alert("Thêm ảnh thành công!");
+        this.getImageById(this.house.id);
       }, error => {
         console.log("Lỗi " + error);
       })
