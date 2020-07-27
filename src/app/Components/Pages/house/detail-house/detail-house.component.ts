@@ -5,6 +5,9 @@ import {HouseService} from '../../../../Services/house.service';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {RoomService} from '../../../../Services/room.service';
 import {Room} from '../../../../model/room';
+import * as firebase from "firebase";
+import {HouseImages} from "../../../../model/houseImages";
+import {HouseImagesService} from "../../../../Services/house-images.service";
 
 @Component({
   selector: 'app-detail-house',
@@ -16,10 +19,36 @@ export class DetailHouseComponent implements OnInit {
   house: House;
   sub: Subscription;
   rooms: Room[];
+  arrayPicture = '';
+  image: HouseImages;
+  message = true;
+  houseImages: HouseImages[];
+  sizeOfRoomsIsZero = true;
 
   constructor(private houseService: HouseService,
               private activateRoute: ActivatedRoute,
-              private  roomService: RoomService) {
+              private  roomService: RoomService,
+              private houseImagesService: HouseImagesService) {
+  }
+
+  getImageById(id) {
+    this.houseImagesService.getImagesByIdHouse(id).subscribe(value => {
+      this.houseImages = value;
+      console.log(this.houseImages);
+    }, error => {
+      console.log("Lỗi " + error);
+    })
+  }
+
+  getRoomsByHouseName(houseName) {
+    this.roomService.searchByHouseName(houseName).subscribe(value => {
+      this.rooms = value;
+      if (this.rooms.length === 0) {
+        this.sizeOfRoomsIsZero = false;
+      } else {
+        this.sizeOfRoomsIsZero = true;
+      }
+    })
   }
 
   ngOnInit() {
@@ -30,25 +59,12 @@ export class DetailHouseComponent implements OnInit {
       const id = paraMap.get('id');
       this.houseService.detail(id).subscribe(next => {
         this.house = next;
+        this.getImageById(this.house.id);
+        this.getRoomsByHouseName(this.house.nameHouse);
       }, error1 => {
         console.log(error1);
       });
-      this.roomService.getList().subscribe(next => {
-        this.rooms = next;
-        console.log(this.rooms);
-      }, error => {
-        console.log(error);
-      });
     });
   }
-
-  bookHouse() {
-    this.houseService.edit(this.house, this.house.id).subscribe(() => {
-      console.log('Edit Thành công!');
-    }, error1 => {
-      console.log('Lỗi ' + error1);
-    });
-  }
-
 
 }

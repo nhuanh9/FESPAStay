@@ -20,8 +20,9 @@ export class DetailYourHouseComponent implements OnInit {
   rooms: Room[];
   arrayPicture = '';
   image: HouseImages;
-  message = true;
+  sizeOfHouseImagesIsZero = true;
   houseImages: HouseImages[];
+  sizeOfRoomsIsZero = true;
 
   constructor(private houseService: HouseService,
               private activateRoute: ActivatedRoute,
@@ -38,29 +39,39 @@ export class DetailYourHouseComponent implements OnInit {
     })
   }
 
+  getRoomsByHouseName(houseName) {
+    this.roomService.searchByHouseName(houseName).subscribe(value => {
+      this.rooms = value;
+      if (this.rooms.length === 0) {
+        this.sizeOfRoomsIsZero = false;
+      } else {
+        this.sizeOfRoomsIsZero = true;
+      }
+    })
+  }
+
+
   ngOnInit() {
+    this.house = {
+      nameHouse: ' '
+    }
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
       this.houseService.detail(id).subscribe(next => {
         this.house = next;
         this.getImageById(this.house.id);
+        this.getRoomsByHouseName(this.house.nameHouse);
       }, error1 => {
         console.log(error1);
-      });
-      this.roomService.getList().subscribe(next => {
-        this.rooms = next;
-        console.log(this.rooms);
-      }, error => {
-        console.log(error);
       });
     });
   }
 
   addImage() {
     if (this.arrayPicture == '') {
-      this.message = false;
+      this.sizeOfHouseImagesIsZero = false;
     } else {
-      this.message = true;
+      this.sizeOfHouseImagesIsZero = true;
       this.image = {
         url: this.arrayPicture,
         houseId: this.house.id

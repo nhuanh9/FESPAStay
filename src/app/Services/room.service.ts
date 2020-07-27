@@ -39,4 +39,9 @@ export class RoomService {
   addComment(idRoom, comment): Observable<CommentToRoom> {
     return this.http.post<CommentToRoom>(this.API_URL + `/${idRoom}/comments`, comment);
   }
+
+  searchByHouseName(houseName): Observable<Room[]> {
+    return this.http.post<Room[]>(this.API_URL + `/search-by-house-name`, houseName)
+  }
+
 }
