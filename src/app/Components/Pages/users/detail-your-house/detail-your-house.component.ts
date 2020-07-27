@@ -20,6 +20,7 @@ export class DetailYourHouseComponent implements OnInit {
   rooms: Room[];
   arrayPicture = '';
   image: HouseImages;
+  message = true;
 
   constructor(private houseService: HouseService,
               private activateRoute: ActivatedRoute,
@@ -53,16 +54,19 @@ export class DetailYourHouseComponent implements OnInit {
   }
 
   addImage() {
-    this.image = {
-      url: this.arrayPicture,
-      houseId: this.house.id
+    if (this.arrayPicture == '') {
+      this.message = false;
+    } else {
+      this.image = {
+        url: this.arrayPicture,
+        houseId: this.house.id
+      }
+      this.houseImagesService.create(this.image).subscribe(value => {
+        alert("Thêm ảnh thành công!");
+      }, error => {
+        console.log("Lỗi " + error);
+      })
     }
-    console.log(this.image);
-    this.houseImagesService.create(this.image).subscribe(value => {
-      alert("Thêm ảnh thành công!");
-    }, error => {
-      console.log("Lỗi " + error);
-    })
   }
 
   saveImg(value) {

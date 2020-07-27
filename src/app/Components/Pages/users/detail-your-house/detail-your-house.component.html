@@ -29,6 +29,9 @@
       </div>
     </div>
     <div class="row">
+      <div *ngIf="!message" class="alert alert-secondary m-1 text-center" role="alert">
+        Bạn phải tải ảnh lên trước
+      </div>
       <div class="m-1 ml-3">
         <button class="btn btn-primary" (click)="addImage()">Thêm Ảnh</button>
       </div>
@@ -65,7 +68,7 @@
       <div class="row">
         <div class="">
           <a [routerLink]="['/user/room/detail-your-room', room.id]" class="btn btn-secondary"
-             style="width: 100px;">Chi tiet</a>
+             style="width: 100px;">Chi Tiết</a>
         </div>
       </div>
     </div>
