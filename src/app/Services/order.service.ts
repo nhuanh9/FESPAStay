@@ -17,16 +17,21 @@ export class OrderService {
   getList(): Observable<Order[]> {
     return this.http.get<Order[]>(this.API_URL);
   }
-  //
-  // detail(id: string): Observable<Room> {
-  //   return this.http.get<Room>(this.API_URL + `/${id}`);
-  // }
-  //
-  // edit(room: Room, id: string): Observable<Room> {
-  //   return this.http.put<Room>(this.API_URL + `/${id}`, room);
-  // }
 
   delete(id: string): Observable<Order> {
     return this.http.delete<Order>(this.API_URL + `/${id}`);
   }
+
+  getOrdersByHouseName(houseName: string): Observable<Order[]> {
+    return this.http.post<Order[]>(this.API_URL + `/search-by-house-name`, houseName);
+  }
+
+  getOrdersByGuestName(guestName: string): Observable<Order[]> {
+    return this.http.post<Order[]>(this.API_URL + `/search-by-guest-name`, guestName);
+  }
+
+  getOrdersByUserId(userId: number): Observable<Order[]> {
+    return this.http.post<Order[]>(this.API_URL + `/search-by-user-id`, userId);
+  }
+
 }

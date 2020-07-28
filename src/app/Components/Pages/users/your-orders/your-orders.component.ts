@@ -36,7 +36,11 @@ export class YourOrdersComponent implements OnInit {
     this.authenticationService.currentUser.subscribe(value => {
       this.userService.userDetail(value.id + '').subscribe(result => {
         this.currentUser = result;
-        this.orders = this.currentUser.listOrder;
+        this.orderService.getOrdersByUserId(this.currentUser.id).subscribe(value => {
+          this.orders = value;
+        }, error => {
+          console.log("Lỗi " + error);
+        });
       });
     });
   }
@@ -59,7 +63,7 @@ export class YourOrdersComponent implements OnInit {
           location.reload();
         });
       });
-    } else  {
+    } else {
       alert('Bạn không thể xoá đơn này do còn ít hơn 1 ngày!');
     }
   }

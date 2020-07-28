@@ -14,6 +14,7 @@ import {RoomService} from '../../../../../Services/room.service';
 import * as firebase from 'firebase';
 import {Order} from '../../../../../model/order';
 import {OrderService} from '../../../../../Services/order.service';
+import {User} from "../../../../../model/user";
 
 @Component({
   selector: 'app-create-order',
@@ -29,6 +30,7 @@ export class CreateOrderComponent implements OnInit {
   room: Room;
   sub: Subscription;
   order: Order;
+  currentUser: User;
 
   constructor(private houseService: HouseService,
               private  router: Router,
@@ -63,20 +65,26 @@ export class CreateOrderComponent implements OnInit {
 
   createOrder() {
     this.authenticationService.currentUser.subscribe(value => {
-      this.order = {
-        nameGuest: this.createForm.get('nameGuest').value,
-        phoneNumber: this.createForm.get('phoneNumber').value,
-        formDate: this.createForm.get('formDate').value,
-        toDate: this.createForm.get('toDate').value,
-        timeOrder: '',
-        total: '',
-      };
-      console.log(this.order);
+      this.userService.userDetail(value.id + '').subscribe(result => {
+        this.currentUser = result;
+        this.order = {
+          nameGuest: this.createForm.get('nameGuest').value,
+          phoneNumber: this.createForm.get('phoneNumber').value,
+          formDate: this.createForm.get('formDate').value,
+          toDate: this.createForm.get('toDate').value,
+          timeOrder: '',
+          total: '',
+          userId: this.currentUser.id,
+          roomName: this.room.nameRoom
+        };
+      }, error => {
+        console.log("Lỗi " + error);
+      });
+
       this.userService.userDetail(value.id + '').subscribe(result => {
         this.roomService.createOrder(this.room.id, result.id, this.order).subscribe(() => {
           alert('Thêm order thành công!');
           this.router.navigate(['/user/room/detail-room/' + this.room.id + '']);
-          console.log(this.order);
         }, error1 => {
           console.log('Lỗi ' + error1);
         });
