@@ -22,10 +22,6 @@ export class CarouselComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.houseImagesService.getImagesByIdHouse('4').subscribe(result => {
-      this.houseImages = result;
-      console.log(this.houseImages);
-    })
   }
 
 }

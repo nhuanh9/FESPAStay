@@ -58,9 +58,7 @@ export class DetailYourRoomsComponent implements OnInit {
         this.comment.username = result.username;
         this.comment.imageUrls = result.imageUrls;
         this.roomService.addComment(this.room.id, this.comment).subscribe(() => {
-          // alert('Thêm bình luận thành công!');
           location.reload(true);
-          // this.router.navigate(['/user/room/detail-room/' + this.room.id]);
         }, error1 => {
           console.log('Lỗi ' + error1);
         });

@@ -11,6 +11,7 @@ import {ListOrderComponent} from '../Components/Pages/room/Order/list-order/list
 import {ListYourRoomsComponent} from '../Components/Pages/users/list-your-rooms/list-your-rooms.component';
 import {DetailYourRoomsComponent} from '../Components/Pages/users/detail-your-rooms/detail-your-rooms.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {NgbRatingModule} from "@ng-bootstrap/ng-bootstrap";
 
 const routing: Routes = [
   {
@@ -48,12 +49,13 @@ const routing: Routes = [
     ListOrderComponent,
     DetailYourRoomsComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routing),
-    ReactiveFormsModule,
-    NgxPaginationModule
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routing),
+        ReactiveFormsModule,
+        NgxPaginationModule,
+        NgbRatingModule
+    ]
 })
 export class RoomModule {
 }

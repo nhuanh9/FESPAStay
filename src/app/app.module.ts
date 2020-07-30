@@ -26,6 +26,7 @@ import { ListYourRoomsComponent } from './Components/Pages/users/list-your-rooms
 import { DetailYourHouseComponent } from './Components/Pages/users/detail-your-house/detail-your-house.component';
 import { DetailYourRoomsComponent } from './Components/Pages/users/detail-your-rooms/detail-your-rooms.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

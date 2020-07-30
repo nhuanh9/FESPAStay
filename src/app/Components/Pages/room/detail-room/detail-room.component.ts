@@ -8,6 +8,8 @@ import {CommentToRoom} from '../../../../model/comment';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../../../Services/authentication.service';
 import {UserService} from '../../../../Services/user.service';
+import {RatingService} from "../../../../Services/rating.service";
+import {Rating} from "../../../../model/rating";
 
 @Component({
   selector: 'app-detail-room',
@@ -22,13 +24,19 @@ export class DetailRoomComponent implements OnInit {
   comments: CommentToRoom[];
   commentForm: FormGroup;
   comment: CommentToRoom;
+  currentRate = 8;
+  ratingForRoom: Rating;
+  currentRatings: Rating[];
+  avgCurrentRatings: number;
 
   constructor(private roomService: RoomService,
               private  router: Router,
               private fb: FormBuilder,
               private activateRoute: ActivatedRoute,
               private authenticationService: AuthenticationService,
-              private userService: UserService,) {
+              private userService: UserService,
+              private ratingService: RatingService
+  ) {
   }
 
   loadComment() {
@@ -38,7 +46,11 @@ export class DetailRoomComponent implements OnInit {
         this.room = next;
         this.orders = this.room.orderForms;
         this.comments = this.room.listComment;
-        console.log(this.orders);
+        this.ratingService.getRatesByHouseId(this.room.id).subscribe(value => {
+          console.log(value);
+          this.currentRatings = value;
+          this.avgCurrentRatings = this.getAvgRatings(this.currentRatings);
+        })
       }, error1 => {
         console.log(error1);
       });
@@ -51,12 +63,32 @@ export class DetailRoomComponent implements OnInit {
     });
   }
 
+  // getRatingOfRoom() {
+  //   this.ratingService.getRatesByHouseId(this.room.id).subscribe(value => {
+  //     console.log(value);
+  //     // this.currentRatings = value;
+  //     // this.avgCurrentRatings = this.getAvgRatings(this.currentRatings);
+  //     // console.log(this.avgCurrentRatings);
+  //   }, error => {
+  //   });
+  // }
+  //
+  getAvgRatings(ratings) {
+    let avgRate = 0;
+    for (let i = 0; i < ratings.length; i++) {
+      avgRate += Number(ratings[i].rate);
+    }
+    avgRate = avgRate / ratings.length;
+    return avgRate;
+  }
+
   ngOnInit() {
     this.room = {
       id: ''
     }
     this.loadComment();
     this.prepareFormComment();
+    // this.getRatingOfRoom();
   }
 
   addComment() {
@@ -77,4 +109,19 @@ export class DetailRoomComponent implements OnInit {
       });
     });
   }
+
+  rateRoom() {
+    this.ratingForRoom = {
+      houseId: this.room.id,
+      rate: this.currentRate.toString()
+    }
+
+    this.ratingService.create(this.ratingForRoom).subscribe(result => {
+      alert("Cảm ơn bạn đã đánh giá!");
+      this.loadComment();
+    }, error => {
+      console.log("Lỗi!");
+    })
+  }
 }
+

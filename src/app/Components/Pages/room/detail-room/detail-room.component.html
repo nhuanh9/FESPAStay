@@ -17,14 +17,11 @@
       <div class="m-3">
         <p>Chủ nhà: {{room.nameHost}}</p>
         <p>Mô tả: {{room.description}} </p>
+        <p>Đánh giá: {{avgCurrentRatings}} </p>
       </div>
     </div>
-
     <a class="btn btn-info ml-3" [routerLink]="['/user/room', room.id, 'createOrder']">
       Đặt Phòng
-    </a>
-    <a class="btn btn-info ml-3" [routerLink]="['/user/room', room.id, 'list-order']">
-      DS Đặt Phòng
     </a>
   </div>
 </div>
@@ -56,6 +53,23 @@
         </form>
       </div>
     </div>
+  </div>
+  <div class="col-6">
+    <div class="m-3">
+      <div class="row">
+        <p>Hãy đánh giá về phòng này sau khi sử dụng dịch vụ!</p>
+        <ngb-rating [(rate)]="currentRate">
+          <ng-template let-fill="fill" let-index="index">
+            <span class="star" [class.filled]="fill === 100" [class.bad]="index < 4">&#9733;</span>
+          </ng-template>
+        </ngb-rating>
+      </div>
+      <br>
+      <div class="row">
+        <button (click)="rateRoom()" class="btn btn-warning mb-2">Đánh giá</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
