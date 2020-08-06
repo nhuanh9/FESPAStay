@@ -14,7 +14,7 @@ export class OrderService {
   constructor(private http: HttpClient) {
   }
 
-  getList(): Observable<Order[]> {
+  getAll(): Observable<Order[]> {
     return this.http.get<Order[]>(this.API_URL);
   }
 
@@ -22,15 +22,15 @@ export class OrderService {
     return this.http.delete<Order>(this.API_URL + `/${id}`);
   }
 
-  getOrdersByHouseName(houseName: string): Observable<Order[]> {
+  getAllByHouseName(houseName: string): Observable<Order[]> {
     return this.http.post<Order[]>(this.API_URL + `/search-by-house-name`, houseName);
   }
 
-  getOrdersByGuestName(guestName: string): Observable<Order[]> {
+  getAllByGuestName(guestName: string): Observable<Order[]> {
     return this.http.post<Order[]>(this.API_URL + `/search-by-guest-name`, guestName);
   }
 
-  getOrdersByUserId(userId: number): Observable<Order[]> {
+  getAllByUserId(userId: number): Observable<Order[]> {
     return this.http.post<Order[]>(this.API_URL + `/search-by-user-id`, userId);
   }
 

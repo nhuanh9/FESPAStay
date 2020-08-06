@@ -36,11 +36,15 @@ export class AddRoomComponent implements OnInit {
               private userService: UserService,
               private activateRoute: ActivatedRoute,
               private roomService: RoomService
-              // private categoryRoom: CategoryRoomService,
   ) {
   }
 
   ngOnInit() {
+    this.getHouse();
+    this.prepareForm();
+  }
+
+  private getHouse() {
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
       this.houseService.detail(id).subscribe(next => {
@@ -49,6 +53,9 @@ export class AddRoomComponent implements OnInit {
         console.log(error1);
       });
     });
+  }
+
+  private prepareForm() {
     this.createForm = this.fb.group({
       hostName: ['', [Validators.required]],
       nameRoom: ['', [Validators.required]],
@@ -57,30 +64,9 @@ export class AddRoomComponent implements OnInit {
     });
   }
 
-  transferFormData() {
-    this.authenticationService.currentUser.subscribe(value => {
-      this.room = {
-        nameHouse: this.house.nameHouse,
-        nameRoom: this.createForm.get('nameRoom').value,
-        priceRoom: this.createForm.get('priceRoom').value,
-        description: this.createForm.get('description').value,
-        imageUrls: this.arrayPicture
-      };
-      this.userService.userDetail(value.id + '').subscribe(result => {
-        this.room.nameHost = result.username;
-      });
-    });
-  }
-
   createRoom() {
     this.authenticationService.currentUser.subscribe(value => {
-      this.room = {
-        nameHouse: this.house.nameHouse,
-        nameRoom: this.createForm.get('nameRoom').value,
-        priceRoom: this.createForm.get('priceRoom').value,
-        description: this.createForm.get('description').value,
-        imageUrls: this.arrayPicture
-      };
+      this.setNewRoom();
       this.userService.userDetail(value.id + '').subscribe(result => {
         this.room.nameHost = result.username;
         this.houseService.createRoom(this.house.id, this.room).subscribe(() => {
@@ -91,6 +77,16 @@ export class AddRoomComponent implements OnInit {
         });
       });
     });
+  }
+
+  private setNewRoom() {
+    this.room = {
+      nameHouse: this.house.nameHouse,
+      nameRoom: this.createForm.get('nameRoom').value,
+      priceRoom: this.createForm.get('priceRoom').value,
+      description: this.createForm.get('description').value,
+      imageUrls: this.arrayPicture
+    };
   }
 
   saveImg(value) {

@@ -13,7 +13,6 @@ import {CategoryHouse} from "../../../../model/categoryHouse";
   styleUrls: ['./list-house.component.scss']
 })
 export class ListHouseComponent implements OnInit {
-  // listHouse: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   p = 1;
   listHouse: House[];
   listCategoryHouse: CategoryHouse[];
@@ -27,33 +26,38 @@ export class ListHouseComponent implements OnInit {
               private categoryHouseService: CategoryHouseService) {
   }
 
-  getListCategoryHouse() {
-    this.categoryHouseService.getList().subscribe(next => {
+  getAllCategoryHouse() {
+    this.categoryHouseService.getAll().subscribe(next => {
       this.listCategoryHouse = next;
     });
   }
 
-  getListHouse() {
-    this.houseService.getList().subscribe(result => {
+  getAllHouse() {
+    this.houseService.getAll().subscribe(result => {
       this.listHouse = result;
     }, error => {
       console.log('Loi!');
     });
   }
 
-  ngOnInit() {
-    this.getListHouse();
-    this.getListCategoryHouse();
+  private getCurrentUser() {
     this.authenticationService.currentUser.subscribe(value => {
       this.userService.userDetail(value.id + '').subscribe(result => {
         this.currentUser = result;
       });
     });
+  }
+
+  ngOnInit() {
+    this.getAllHouse();
+    this.getAllCategoryHouse();
+    this.getCurrentUser();
 
   }
 
-  searchByCategory(category) {
-    this.houseService.searchCategory(category).subscribe(value => {
+
+  getAllByCategory(category) {
+    this.houseService.getAllByCategory(category).subscribe(value => {
       this.listHouse = value;
       if (this.listHouse.length == 0) {
         // alert("Loại: " + category + " không có kết quả nào!");

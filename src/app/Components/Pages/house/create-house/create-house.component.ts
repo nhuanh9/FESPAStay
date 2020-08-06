@@ -34,7 +34,6 @@ export class CreateHouseComponent implements OnInit {
               private categoryHouseService: CategoryHouseService,
               private authenticationService: AuthenticationService,
               private userService: UserService
-              // private categoryRoom: CategoryRoomService,
   ) {
   }
 
@@ -43,7 +42,6 @@ export class CreateHouseComponent implements OnInit {
       hostName: ['', [Validators.required]],
       nameHouse: ['', [Validators.required]],
       categoryHouse: ['', [Validators.required]],
-      // categoryRoom: ['', [Validators.required]],
       address: ['', [Validators.required]],
       amountBathRoom: ['', [Validators.required]],
       amountBedRoom: ['', [Validators.required]],
@@ -54,7 +52,7 @@ export class CreateHouseComponent implements OnInit {
   }
 
   getListCategoryHouse() {
-    this.categoryHouseService.getList().subscribe(next => {
+    this.categoryHouseService.getAll().subscribe(next => {
       this.listCategoryHouse = next;
     });
   }
@@ -73,12 +71,11 @@ export class CreateHouseComponent implements OnInit {
     }
   }
 
-  setData() {
+  setNewHouse() {
     this.house = {
       hostName: this.createForm.get('hostName').value,
       nameHouse: this.createForm.get('nameHouse').value,
       categoryHouse: this.categoryHouse,
-      // categoryRoom: this.createForm.get('categoryRoom').value,
       amountBathRoom: this.createForm.get('amountBathRoom').value,
       amountBedRoom: this.createForm.get('amountBedRoom').value,
       address: this.createForm.get('address').value,
@@ -94,7 +91,7 @@ export class CreateHouseComponent implements OnInit {
   createHouse() {
     this.authenticationService.currentUser.subscribe(value => {
       this.setCategoryForFormData();
-      this.setData();
+      this.setNewHouse();
       this.userService.userDetail(value.id + '').subscribe(result => {
         this.house.hostName = result.username;
         this.currentUser = result;

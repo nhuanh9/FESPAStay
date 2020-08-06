@@ -3,7 +3,6 @@ export interface House {
   hostName?: string;
   nameHouse?: string;
   categoryHouse?: any;
-  // categoryRoom?: string;
   amountBathRoom?: string;
   amountBedRoom?: string;
   address?: string;

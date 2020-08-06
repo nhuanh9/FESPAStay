@@ -40,6 +40,11 @@ export class EditRoomComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getOldRoom();
+    this.prepareForm();
+  }
+
+  private getOldRoom() {
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
       this.roomService.detail(id).subscribe(next => {
@@ -50,6 +55,9 @@ export class EditRoomComponent implements OnInit {
         console.log(error1);
       });
     });
+  }
+
+  private prepareForm() {
     this.editForm = this.fb.group({
       hostName: ['', [Validators.required]],
       nameRoom: ['', [Validators.required]],
@@ -58,31 +66,10 @@ export class EditRoomComponent implements OnInit {
     });
   }
 
-  transferFormData() {
-    this.authenticationService.currentUser.subscribe(value => {
-      this.room = {
-        nameHouse: this.room.nameHouse,
-        nameRoom: this.editForm.get('nameRoom').value,
-        priceRoom: this.editForm.get('priceRoom').value,
-        description: this.editForm.get('description').value,
-        imageUrls: this.arrayPicture
-      };
-      this.userService.userDetail(value.id + '').subscribe(result => {
-        this.room.nameHost = result.username;
-      });
-    });
-  }
-
   editRoom() {
     this.authenticationService.currentUser.subscribe(value => {
       this.userService.userDetail(value.id + '').subscribe(result => {
-        const room: Room = {
-          nameHouse: this.room.nameHouse,
-          nameRoom: this.editForm.get('nameRoom').value,
-          priceRoom: this.editForm.get('priceRoom').value,
-          description: this.editForm.get('description').value,
-          imageUrls: this.arrayPicture
-        };
+        const room = this.setNewRoom();
         this.roomService.edit(room, this.idRoom).subscribe(() => {
           alert('Sửa thành công!');
           this.router.navigate(['/user/room/detail-your-room/' + this.room.id]);
@@ -91,6 +78,17 @@ export class EditRoomComponent implements OnInit {
         });
       });
     });
+  }
+
+  private setNewRoom() {
+    const room: Room = {
+      nameHouse: this.room.nameHouse,
+      nameRoom: this.editForm.get('nameRoom').value,
+      priceRoom: this.editForm.get('priceRoom').value,
+      description: this.editForm.get('description').value,
+      imageUrls: this.arrayPicture
+    };
+    return room;
   }
 
   saveImg(value) {

@@ -26,12 +26,12 @@
       </div>
       <div class="row">
         <div class=" m-1">
-          Từ ngày: {{order.formDate.substring(0, 10)}}
+          Từ ngày: {{order.formDate.substring(0, 10)| date : 'dd/MM/yyyy'}}
         </div>
       </div>
       <div class="row">
         <div class=" m-1">
-          Đến : {{order.toDate.substring(0, 10)}}
+          Đến : {{order.toDate.substring(0, 10)| date : 'dd/MM/yyyy'}}
         </div>
       </div>
       <div class="row">

@@ -36,20 +36,22 @@ export class YourOrdersComponent implements OnInit {
     this.authenticationService.currentUser.subscribe(value => {
       this.userService.userDetail(value.id + '').subscribe(result => {
         this.currentUser = result;
-        this.orderService.getOrdersByUserId(this.currentUser.id).subscribe(value => {
-          this.orders = value;
-        }, error => {
-          console.log("Lỗi " + error);
-        });
+        this.getOrderByUserId(this.currentUser.id);
       });
+    });
+  }
+
+  private getOrderByUserId(id) {
+    this.orderService.getAllByUserId(id).subscribe(value => {
+      this.orders = value;
+    }, error => {
+      console.log("Lỗi " + error);
     });
   }
 
   deleteOrder(order) {
     const orderTime = new Date(order.formDate);
     const orderTimeSecond = orderTime.getTime() - this.currentTime.getTime();
-    // console.log(orderTime.getTime());
-    // console.log(this.currentTime.getTime());
     console.log(orderTimeSecond - this.oneDay);
     if (orderTimeSecond > this.oneDay || orderTimeSecond < 0) {
       this.authenticationService.currentUser.subscribe(value => {

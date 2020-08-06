@@ -39,40 +39,28 @@ export class DetailRoomComponent implements OnInit {
   ) {
   }
 
-  loadComment() {
+  getAllCommentsAndRating() {
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
       this.roomService.detail(id).subscribe(next => {
         this.room = next;
         this.orders = this.room.orderForms;
         this.comments = this.room.listComment;
-        this.ratingService.getRatesByHouseId(this.room.id).subscribe(value => {
-          console.log(value);
-          this.currentRatings = value;
-          this.avgCurrentRatings = this.getAvgRatings(this.currentRatings);
-        })
+        this.getRatingByHouseId(this.room.id);
       }, error1 => {
         console.log(error1);
       });
     });
   }
 
-  prepareFormComment() {
-    this.commentForm = this.fb.group({
-      comment: ['', [Validators.required]]
-    });
+  private getRatingByHouseId(id) {
+    this.ratingService.getAllByHouseId(id).subscribe(value => {
+      console.log(value);
+      this.currentRatings = value;
+      this.avgCurrentRatings = this.getAvgRatings(this.currentRatings);
+    })
   }
 
-  // getRatingOfRoom() {
-  //   this.ratingService.getRatesByHouseId(this.room.id).subscribe(value => {
-  //     console.log(value);
-  //     // this.currentRatings = value;
-  //     // this.avgCurrentRatings = this.getAvgRatings(this.currentRatings);
-  //     // console.log(this.avgCurrentRatings);
-  //   }, error => {
-  //   });
-  // }
-  //
   getAvgRatings(ratings) {
     let avgRate = 0;
     for (let i = 0; i < ratings.length; i++) {
@@ -82,26 +70,30 @@ export class DetailRoomComponent implements OnInit {
     return avgRate;
   }
 
+  prepareFormComment() {
+    this.commentForm = this.fb.group({
+      comment: ['', [Validators.required]]
+    });
+  }
+
   ngOnInit() {
     this.room = {
       id: ''
     }
-    this.loadComment();
+    this.comments = [];
+    this.getAllCommentsAndRating();
     this.prepareFormComment();
-    // this.getRatingOfRoom();
   }
 
   addComment() {
     this.authenticationService.currentUser.subscribe(value => {
-      this.comment = {
-        comment: this.commentForm.get('comment').value
-      };
+      this.setNewComment();
       console.log(this.comment);
       this.userService.userDetail(value.id + '').subscribe(result => {
         this.comment.username = result.username;
         this.comment.imageUrls = result.imageUrls;
         this.roomService.addComment(this.room.id, this.comment).subscribe(() => {
-          this.loadComment();
+          this.getAllCommentsAndRating();
           this.prepareFormComment();
         }, error1 => {
           console.log('Lỗi ' + error1);
@@ -110,15 +102,20 @@ export class DetailRoomComponent implements OnInit {
     });
   }
 
+  private setNewComment() {
+    this.comment = {
+      comment: this.commentForm.get('comment').value
+    };
+  }
+
   rateRoom() {
     this.ratingForRoom = {
       houseId: this.room.id,
       rate: this.currentRate.toString()
     }
-
     this.ratingService.create(this.ratingForRoom).subscribe(result => {
       alert("Cảm ơn bạn đã đánh giá!");
-      this.loadComment();
+      this.getAllCommentsAndRating();
     }, error => {
       console.log("Lỗi!");
     })

@@ -46,6 +46,12 @@ export class CreateOrderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getDetailRoom();
+    this.prepareForm();
+  }
+
+
+  private getDetailRoom() {
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
       this.roomService.detail(id).subscribe(next => {
@@ -54,6 +60,9 @@ export class CreateOrderComponent implements OnInit {
         console.log(error1);
       });
     });
+  }
+
+  private prepareForm() {
     this.createForm = this.fb.group({
       nameGuest: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required]],
@@ -62,21 +71,11 @@ export class CreateOrderComponent implements OnInit {
     });
   }
 
-
   createOrder() {
     this.authenticationService.currentUser.subscribe(value => {
       this.userService.userDetail(value.id + '').subscribe(result => {
         this.currentUser = result;
-        this.order = {
-          nameGuest: this.createForm.get('nameGuest').value,
-          phoneNumber: this.createForm.get('phoneNumber').value,
-          formDate: this.createForm.get('formDate').value,
-          toDate: this.createForm.get('toDate').value,
-          timeOrder: '',
-          total: '',
-          userId: this.currentUser.id,
-          roomName: this.room.nameRoom
-        };
+        this.setNewOrder();
       }, error => {
         console.log("Lỗi " + error);
       });
@@ -92,4 +91,16 @@ export class CreateOrderComponent implements OnInit {
     });
   }
 
+  private setNewOrder() {
+    this.order = {
+      nameGuest: this.createForm.get('nameGuest').value,
+      phoneNumber: this.createForm.get('phoneNumber').value,
+      formDate: this.createForm.get('formDate').value,
+      toDate: this.createForm.get('toDate').value,
+      timeOrder: '',
+      total: '',
+      userId: this.currentUser.id,
+      roomName: this.room.nameRoom
+    };
+  }
 }

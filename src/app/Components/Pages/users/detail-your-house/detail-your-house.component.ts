@@ -30,8 +30,8 @@ export class DetailYourHouseComponent implements OnInit {
               private houseImagesService: HouseImagesService) {
   }
 
-  getImageById(id) {
-    this.houseImagesService.getImagesByIdHouse(id).subscribe(value => {
+  getImageByHouseId(id) {
+    this.houseImagesService.getAllByIdHouse(id).subscribe(value => {
       this.houseImages = value;
       console.log(this.houseImages);
     }, error => {
@@ -40,7 +40,7 @@ export class DetailYourHouseComponent implements OnInit {
   }
 
   getRoomsByHouseName(houseName) {
-    this.roomService.searchByHouseName(houseName).subscribe(value => {
+    this.roomService.getAllByHouseName(houseName).subscribe(value => {
       this.rooms = value;
       if (this.rooms.length === 0) {
         this.sizeOfRoomsIsZero = false;
@@ -55,11 +55,15 @@ export class DetailYourHouseComponent implements OnInit {
     this.house = {
       nameHouse: ' '
     }
+    this.getImagesAndRooms();
+  }
+
+  private getImagesAndRooms() {
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
       this.houseService.detail(id).subscribe(next => {
         this.house = next;
-        this.getImageById(this.house.id);
+        this.getImageByHouseId(this.house.id);
         this.getRoomsByHouseName(this.house.nameHouse);
       }, error1 => {
         console.log(error1);
@@ -78,7 +82,7 @@ export class DetailYourHouseComponent implements OnInit {
       }
       this.houseImagesService.create(this.image).subscribe(value => {
         alert("Thêm ảnh thành công!");
-        this.getImageById(this.house.id);
+        this.getImageByHouseId(this.house.id);
         this.arrayPicture = ''
       }, error => {
         console.log("Lỗi " + error);

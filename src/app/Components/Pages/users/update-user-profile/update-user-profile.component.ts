@@ -55,21 +55,23 @@ export class UpdateUserProfileComponent implements OnInit {
   getUserProfile() {
     this.sub = this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const id = paramMap.get('id');
-      this.userService.getUserProfile(id).subscribe(value => {
-        this.currentUser = value;
-        this.userFirstName = this.currentUser.firstName;
-        this.userLastName = this.currentUser.lastName;
-        this.userGender = this.currentUser.gender;
-        this.userPhoneNumber = this.currentUser.phoneNumber;
-        this.userEmail = this.currentUser.email;
-        this.arrayPicture = this.currentUser.imageUrls;
-        this.userOrders = this.currentUser.listOrder;
-        this.userHouses = this.currentUser.houseList;
-        console.log(this.arrayPicture);
-        console.log('Thanh cong!');
-      }, () => {
-        console.log('Loi' + this.arrayPicture);
-      });
+      this.getUserProfileById(id);
+    });
+  }
+
+  private getUserProfileById(id: string) {
+    this.userService.getUserProfile(id).subscribe(value => {
+      this.currentUser = value;
+      this.userFirstName = this.currentUser.firstName;
+      this.userLastName = this.currentUser.lastName;
+      this.userGender = this.currentUser.gender;
+      this.userPhoneNumber = this.currentUser.phoneNumber;
+      this.userEmail = this.currentUser.email;
+      this.arrayPicture = this.currentUser.imageUrls;
+      this.userOrders = this.currentUser.listOrder;
+      this.userHouses = this.currentUser.houseList;
+    }, () => {
+      console.log('Loi' + this.arrayPicture);
     });
   }
 

@@ -32,7 +32,7 @@ export class DetailHouseComponent implements OnInit {
   }
 
   getImageById(id) {
-    this.houseImagesService.getImagesByIdHouse(id).subscribe(value => {
+    this.houseImagesService.getAllByIdHouse(id).subscribe(value => {
       this.houseImages = value;
       console.log(this.houseImages);
     }, error => {
@@ -40,8 +40,8 @@ export class DetailHouseComponent implements OnInit {
     })
   }
 
-  getRoomsByHouseName(houseName) {
-    this.roomService.searchByHouseName(houseName).subscribe(value => {
+  getAllByHouseName(houseName) {
+    this.roomService.getAllByHouseName(houseName).subscribe(value => {
       this.rooms = value;
       if (this.rooms.length === 0) {
         this.sizeOfRoomsIsZero = false;
@@ -60,7 +60,7 @@ export class DetailHouseComponent implements OnInit {
       this.houseService.detail(id).subscribe(next => {
         this.house = next;
         this.getImageById(this.house.id);
-        this.getRoomsByHouseName(this.house.nameHouse);
+        this.getAllByHouseName(this.house.nameHouse);
       }, error1 => {
         console.log(error1);
       });

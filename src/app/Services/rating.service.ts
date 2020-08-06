@@ -18,7 +18,7 @@ export class RatingService {
     return this.http.post<Rating>(this.API_URL, rate);
   }
 
-  getRatesByHouseId(id: string): Observable<Rating[]> {
+  getAllByHouseId(id: string): Observable<Rating[]> {
     return this.http.get<Rating[]>(this.API_URL + `/find-rates-of-house/${id}`)
   }
 

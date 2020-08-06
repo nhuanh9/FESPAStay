@@ -33,6 +33,18 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
+    const user = this.setNewUser();
+    this.userService.register(user).subscribe(() => {
+      console.log('Đăng ký thành công');
+      this.registerForm.reset();
+      this.router.navigate(['/login']);
+    }, err => {
+      console.log(err);
+    });
+    console.log(user);
+  }
+
+  private setNewUser() {
     const user: User = {
       username: this.registerForm.value.username,
       password: this.registerForm.value.password,
@@ -43,13 +55,6 @@ export class RegisterComponent implements OnInit {
       phoneNumber: this.registerForm.value.phoneNumber,
       gender: this.registerForm.value.gender
     };
-    this.userService.register(user).subscribe(() => {
-      console.log('Đăng ký thành công');
-      this.registerForm.reset();
-      this.router.navigate(['/login']);
-    }, err => {
-      console.log(err);
-    });
-    console.log(user);
+    return user;
   }
 }

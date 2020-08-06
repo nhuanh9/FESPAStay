@@ -1,15 +1,12 @@
 .order-in-detail {
-  -webkit-box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(108, 108, 108, 0.6);
+  border-radius: 5px;
+  font-size: 14px;
 }
 
-.info-house {
-  //border-radius: 5px 5px 5px 5px;
-  //-moz-border-radius: 5px 5px 5px 5px;
-  //-webkit-border-radius: 5px 5px 5px 5px;
-  //border: 1px solid #000000;
-  //background: rgba(0,0,0,0.01);
+.name-house {
+  margin-top: 50px;
+  font-size: 20px !important;
 }
 
 .detail {
@@ -19,12 +16,8 @@
 .thumbnail {
   position: relative;
   text-align: center;
-  border: 3px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(108, 108, 108, 0.6);
   border-radius: 5px;
-  background: #f2fff3 !important;
-  -webkit-box-shadow: 0px 0px 15px -8px rgb(0, 0, 0);
-  -moz-box-shadow: 0px 0px 15px -8px rgb(0, 0, 0);
-  box-shadow: 0px 0px 15px -8px rgb(0, 0, 0);
 }
 
 img {
@@ -32,8 +25,8 @@ img {
 }
 
 .house :hover img {
-  transform: scale(1.05);
-  border-radius: 5px;
+  transform: scale(1.1) !important;
+  border-radius: 10px;
 }
 
 .house :hover .productName a {
@@ -46,23 +39,37 @@ img {
   transform: translate(-50%, -50%);
   color: rgb(242, 255, 243);
 }
-.imageProduct{
-  -webkit-box-shadow: 0px 0px 8px 0.1px rgba(0,0,0,0.15);
-  -moz-box-shadow: 0px 0px 8px 0.1px rgba(0,0,0,0.15);
-  box-shadow: 0px 0px 8px 0.1px rgba(0,0,0,0.15);
-}
-.room{
-  border-top: white 1px solid;
-  -webkit-box-shadow: 0px 0px 8px 0.1px rgba(0,0,0,0.15);
-  -moz-box-shadow: 0px 0px 8px 0.1px rgba(0,0,0,0.15);
-  box-shadow: 0px 0px 8px 0.1px rgba(0,0,0,0.15);
+
+.imageProduct {
+  border-radius: 5px;
 }
 
-.comment{
+.room {
+  border: 1px solid rgba(108, 108, 108, 0.6);
+  border-radius: 5px;
+}
+
+.comment {
   border-radius: 5px;
   background: white;
-  -webkit-box-shadow: 0px 0px 8px 0.1px rgba(0,0,0,0.15);
-  -moz-box-shadow: 0px 0px 8px 0.1px rgba(0,0,0,0.15);
-  box-shadow: 0px 0px 8px 0.1px rgba(0,0,0,0.15);
+  -webkit-box-shadow: 0px 0px 8px 0.1px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px 0px 8px 0.1px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0px 8px 0.1px rgba(0, 0, 0, 0.15);
 }
 
+.star {
+  font-size: 1.2rem;
+  color: #b0c4de;
+}
+
+.filled {
+  color: #ff9a1e;
+}
+
+.bad {
+  color: #deb0b0;
+}
+
+.filled.bad {
+  color: #d04747;
+}

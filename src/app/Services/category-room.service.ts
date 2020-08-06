@@ -14,7 +14,7 @@ export class CategoryRoomService {
   constructor(private http: HttpClient) {
   }
 
-  getList(): Observable<CategoryRoom[]> {
+  getAll(): Observable<CategoryRoom[]> {
     return this.http.get<CategoryRoom[]>(this.API_URL);
   }
 }

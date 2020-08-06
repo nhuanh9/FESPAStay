@@ -22,11 +22,11 @@ export class HouseImagesService {
     return this.http.delete<HouseImages>(this.API_URL + `/${id}`);
   }
 
-  getImagesByIdHouse(id: string): Observable<HouseImages[]> {
+  getAllByIdHouse(id: string): Observable<HouseImages[]> {
     return this.http.get<HouseImages[]>(this.API_URL + `/search-house/${id}`)
   }
 
-  getList(): Observable<HouseImages[]> {
+  getAll(): Observable<HouseImages[]> {
     return this.http.get<HouseImages[]>(this.API_URL)
   }
 }

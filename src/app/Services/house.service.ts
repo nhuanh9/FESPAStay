@@ -14,7 +14,7 @@ export class HouseService {
   constructor(private http: HttpClient) {
   }
 
-  getList(): Observable<House[]> {
+  getAll(): Observable<House[]> {
     return this.http.get<House[]>(this.API_URL);
   }
 
@@ -38,11 +38,11 @@ export class HouseService {
     return this.http.post<Room>(this.API_URL + `/${idHouse}/room`, room);
   }
 
-  searchAddress(address): Observable<House[]> {
+  getAllByAddress(address): Observable<House[]> {
     return this.http.post<House[]>(this.API_URL + `search`, address);
   }
 
-  searchCategory(category): Observable<House[]> {
+  getAllByCategory(category): Observable<House[]> {
     return this.http.post<House[]>(this.API_URL + `/search-by-category`, category);
   }
 }

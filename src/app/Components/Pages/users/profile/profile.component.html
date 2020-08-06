@@ -1,17 +1,16 @@
-<!--<app-carousel></app-carousel>-->
 <div class="row container-fluid mt-5 ml-1 mb-5">
   <div class="col-1 test"></div>
   <div class="card text-center register col-lg-10" style="background: white !important;">
     <div class="row">
-      <div class="col-4 mb-3 mt-3">
+      <div class="col-lg-4 mb-3 mt-3">
         <img src="{{currentUser.imageUrls}}" alt="user image" width="100%" style="border-radius: 15px; ">
       </div>
-      <div class="col-7 text-left mt-3">
+      <div class="col-lg-7 text-left mt-3">
         <div class=" text-center">
           <h2>Thông tin cá nhân</h2>
         </div>
         <div class="row">
-          <div class="col-5 "><h3>Họ và tên</h3></div>
+          <div class="col-5"><h3>Họ và tên</h3></div>
           <div class="col-7"><h3>: {{currentUser.lastName}} {{currentUser.firstName}}</h3></div>
         </div>
         <div class="row">
@@ -47,10 +46,13 @@
           </div>
         </div>
         <div class="row text-center">
-          <div class="col-2"></div>
-          <button class="btn btn-primary nutPhai mr-2" [routerLink]="['/user/list-your-house',currentUser.id]">Nhà của bạn</button>
-          <a [routerLink]="['/user/update-profile',currentUser.id]" class="btn btn-secondary mr-2">Cập nhật TTCN</a>
-          <button class="btn btn-info nutPhai mr-2" [routerLink]="['/user/list-orders',currentUser.id]">Đơn của bạn</button>
+          <div class="col-md-2"></div>
+          <button class="btn btn-primary nutPhai mr-2 mb-2" [routerLink]="['/user/list-your-house',currentUser.id]">Nhà của
+            bạn
+          </button>
+          <a [routerLink]="['/user/update-profile',currentUser.id]" class="btn btn-secondary mr-2 mb-2">Sửa TTCN</a>
+          <button class="btn btn-info nutPhai mr-2 mb-2" [routerLink]="['/user/list-orders',currentUser.id]">Đơn của bạn
+          </button>
         </div>
       </div>
 

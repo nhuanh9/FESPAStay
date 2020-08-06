@@ -16,7 +16,7 @@ export class RoomService {
   constructor(private http: HttpClient) {
   }
 
-  getList(): Observable<Room[]> {
+  getAll(): Observable<Room[]> {
     return this.http.get<Room[]>(this.API_URL);
   }
 
@@ -40,7 +40,7 @@ export class RoomService {
     return this.http.post<CommentToRoom>(this.API_URL + `/${idRoom}/comments`, comment);
   }
 
-  searchByHouseName(houseName): Observable<Room[]> {
+  getAllByHouseName(houseName): Observable<Room[]> {
     return this.http.post<Room[]>(this.API_URL + `/search-by-house-name`, houseName)
   }
 

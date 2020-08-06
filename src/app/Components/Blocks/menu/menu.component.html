@@ -28,7 +28,7 @@
       <button type="button" class="btn btn-outline-dark" routerLink="register">Đăng ký</button>
     </form>
     <div *ngIf="currentUser">
-      <a (click)="logout()" class="btn btn-outline-dark">Đăng suất</a>
+      <a (click)="logout()" class="btn btn-outline-dark m-1">Đăng suất</a>
 
       <a [routerLink]="['/user/profile',currentUser.id]" class="btn btn-outline-dark ml-2">
         TTCN

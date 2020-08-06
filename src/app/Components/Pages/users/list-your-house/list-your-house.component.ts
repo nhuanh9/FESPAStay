@@ -22,6 +22,7 @@ export class ListYourHouseComponent implements OnInit {
   listHouse: House[];
   sub: Subscription;
   currentUser: User;
+
   constructor(private houseService: HouseService,
               private  router: Router,
               private fb: FormBuilder,

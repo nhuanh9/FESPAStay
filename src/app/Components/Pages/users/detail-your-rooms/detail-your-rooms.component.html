@@ -1,56 +1,53 @@
-<div class="row ml-4 mt-5">
-  <div class="col-6"><h2>Home >> {{room.nameHouse}} >><u>{{room.nameRoom}}</u></h2></div>
+<div class="row ml-5 name-house">
+  <p>Home > {{room.nameHouse}} > {{room.nameRoom}}</p>
 </div>
-<div class="row ml-5 mr-5 mb-5 detail">
-  <div class="col-md-6 imageProduct">
-    <img width="100%" src="{{room.imageUrls}}" class="imgProduct mb-3 mt-3">
-
+<div class="row ml-5 mr-5 mb-1 detail">
+  <div class="col-md-6">
+    <img width="100%" src="{{room.imageUrls}}" class=" mb-1">
   </div>
   <div class="col-md-6">
     <div class="order-in-detail">
       <div class="m-3">
         <b><h2>{{room.nameRoom}}</h2></b>
         <p><b>{{room.priceRoom}}$</b>/đêm</p>
-      </div>
-    </div>
-    <div class="info-house mt-3">
-      <div class="m-3">
         <p>Chủ nhà: {{room.nameHost}}</p>
         <p>Mô tả: {{room.description}} </p>
+        <p>Đánh giá: {{avgCurrentRatings}} </p>
       </div>
+      <a class="btn btn-danger m-3" [routerLink]="['/user/room/edit-room', room.id]">
+        Sửa Phòng
+      </a>
+      <a class="btn btn-info m-3" [routerLink]="['/user/room', room.id, 'list-order']">
+        DS Đặt Phòng
+      </a>
     </div>
-    <a class="btn btn-danger" [routerLink]="['/user/room/edit-room', room.id]">
-      Sửa Phòng
-    </a>
-    <a class="btn btn-info ml-3" [routerLink]="['/user/room', room.id, 'list-order']">
-      DS Đặt Phòng
-    </a>
   </div>
 </div>
-<div class="row ml-4">
-  <div class="col-6">
-    <h2>
-      Bình luận
-    </h2>
-    <div class="room m-3">
-      <div class="m-3">
-        <div *ngFor="let comment of comments;">
-          <div class="row m-3">
-            <div class="col-2">
-              <img src="{{comment.imageUrls}}" alt="img cmt" width="50px" height="50px" style="border-radius: 50%">
+<div class="row ml-5 mr-5 mb-1">
+  <div class="col-md-6">
+    <div class="room m-1">
+      <p class="m-1 text-center">Bình luận</p>
+      <div class="m-1">
+        <div *ngFor="let comment of comments| paginate: { itemsPerPage: 6, currentPage: p }">
+          <div class="row m-1">
+            <div class="col-1">
+              <img class="mt-2" src="{{comment.imageUrls}}" alt="img cmt" width="37px" height="37px" style="border-radius: 50%">
             </div>
-            <div class="col-9 comment">
-              <p class="mt-3"><b>{{comment.username}}</b>: <i>{{comment.comment}}</i></p>
+            <div class="col-5 comment ml-2">
+              <p class="mt-2"><b>{{comment.username}}</b>: <i>{{comment.comment}}</i></p>
             </div>
 
             <hr>
           </div>
         </div>
-        <form [formGroup]="commentForm" (ngSubmit)="addComment()" class="form-group m-3">
-          <div class="form-group">
+        <div class="text-center">
+          <pagination-controls *ngIf="comments.length >=6" (pageChange)="p = $event" class="my-pagination" previousLabel="Bình luận trước" nextLabel="Bình luận sau"></pagination-controls>
+        </div>
+        <form [formGroup]="commentForm" (ngSubmit)="addComment()" class="form-group m-3 row">
+          <div class="form-group col-md-9">
             <input type="textarea" class="form-control" formControlName="comment" placeholder="Input your comment...">
           </div>
-          <input type="submit" class="btn btn-secondary mb-2" value="Bình luận">
+          <input type="submit" class="btn btn-secondary mb-2 col-md-3 btn-sm" value="Bình luận">
         </form>
       </div>
     </div>

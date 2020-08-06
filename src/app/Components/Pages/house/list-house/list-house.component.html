@@ -19,7 +19,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
             <a class="dropdown-item" href="#" *ngFor="let category of listCategoryHouse"
-               (click)="searchByCategory(category.name)">{{category.name}}</a>
+               (click)="getAllByCategory(category.name)">{{category.name}}</a>
           </div>
         </li>
         <li class="nav-item dropdown">
@@ -67,7 +67,7 @@
     Không có kết quả nào phù hợp!
   </div>
   <div class="col-sm-6 col-lg-4 col-xl-3 mt-3 house " style="padding-right: 0px;"
-       *ngFor="let house of listHouse | paginate: { itemsPerPage: 8, currentPage: p }">
+       *ngFor="let house of listHouse | paginate: { itemsPerPage: 4, currentPage: p }">
     <div class="thumbnail">
       <a [routerLink]="['/user/house/detail-house', house.id]">
         <img width="100%" height="220px" style="border-radius: 2px" src="{{house.imageUrls}}" class="imgProduct">

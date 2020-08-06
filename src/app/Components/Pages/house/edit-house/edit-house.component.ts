@@ -57,39 +57,39 @@ export class EditHouseComponent implements OnInit {
     });
   }
 
-  getListCategoryHouse() {
-    this.categoryHouseService.getList().subscribe(next => {
+  getAllCategoryHouse() {
+    this.categoryHouseService.getAll().subscribe(next => {
       this.listCategoryHouse = next;
     });
   }
 
-  getHouseById(id) {
+  getOldHouse(id) {
     this.houseService.detail(id).subscribe(next => {
       this.house = next;
       this.idHouse = this.house.id;
     });
   }
 
-  getListRoom() {
-    this.roomService.getList().subscribe(next => {
+  getAllRooms() {
+    this.roomService.getAll().subscribe(next => {
       this.rooms = next;
     }, error => {
       console.log(error);
     });
   }
 
-  getHouse() {
+  getHouseAndAllRooms() {
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
-      this.getHouseById(id);
-      this.getListRoom();
+      this.getOldHouse(id);
+      this.getAllRooms();
     });
   }
 
   ngOnInit() {
-    this.getHouse();
+    this.getHouseAndAllRooms();
     this.prepareForm();
-    this.getListCategoryHouse();
+    this.getAllCategoryHouse();
   }
 
   setCategoryForFormData() {
@@ -107,21 +107,25 @@ export class EditHouseComponent implements OnInit {
     }
   }
 
+  setNewHouse() {
+    let house: House = {
+      hostName: this.editForm.get('hostName').value,
+      nameHouse: this.editForm.get('nameHouse').value,
+      categoryHouse: this.categoryHouse,
+      amountBathRoom: this.editForm.get('amountBathRoom').value,
+      amountBedRoom: this.editForm.get('amountBedRoom').value,
+      address: this.editForm.get('address').value,
+      description: this.editForm.get('description').value,
+      imageUrls: this.arrayPicture
+    };
+    return house;
+  }
+
   editHouse() {
     this.authenticationService.currentUser.subscribe(value => {
       this.userService.userDetail(value.id + '').subscribe(result => {
         this.setCategoryForFormData();
-        const house: House = {
-          hostName: this.editForm.get('hostName').value,
-          nameHouse: this.editForm.get('nameHouse').value,
-          categoryHouse: this.categoryHouse,
-          amountBathRoom: this.editForm.get('amountBathRoom').value,
-          amountBedRoom: this.editForm.get('amountBedRoom').value,
-          address: this.editForm.get('address').value,
-          description: this.editForm.get('description').value,
-          imageUrls: this.arrayPicture
-        };
-        this.houseService.edit(house, this.idHouse).subscribe(() => {
+        this.houseService.edit(this.setNewHouse(), this.idHouse).subscribe(() => {
           alert('Sửa thành công!');
           this.router.navigate(['/user/house/detail-your-house/' + this.house.id]);
         }, error1 => {
