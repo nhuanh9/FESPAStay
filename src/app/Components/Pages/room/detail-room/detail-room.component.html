@@ -2,10 +2,10 @@
   <p>Home > {{room.nameHouse}} > {{room.nameRoom}}</p>
 </div>
 <div class="row ml-5 mr-5 mb-1 detail">
-  <div class="col-md-6">
+  <div class="col-xl-6">
     <img width="100%" src="{{room.imageUrls}}" class="mb-1">
   </div>
-  <div class="col-md-6">
+  <div class="col-xl-6">
     <div class="order-in-detail">
       <div class="m-3">
         <b><h2>{{room.nameRoom}}</h2></b>
@@ -19,31 +19,41 @@
       </a>
     </div>
 
-    <div class="order-in-detail mt-3">
-        <div class="m-3">
-          <p>Hãy đánh giá về phòng này sau khi sử dụng dịch vụ!</p>
-          <ngb-rating [(rate)]="currentRate">
-            <ng-template let-fill="fill" let-index="index">
-              <span class="star" [class.filled]="fill === 100" [class.bad]="index < 4">&#9733;</span>
-            </ng-template>
-          </ngb-rating>
-        </div>
-        <br>
-        <div class="ml-3 mb-3">
-          <button (click)="rateRoom()" class="btn btn-warning mb-2">Đánh giá</button>
-        </div>
+    <div class="order-in-detail mt-1">
+      <div class="m-3">
+        <p>Hãy đánh giá về phòng này sau khi sử dụng dịch vụ!</p>
+        <ngb-rating [(rate)]="currentRate">
+          <ng-template let-fill="fill" let-index="index">
+            <span class="star" [class.filled]="fill === 100" [class.bad]="index < 4">&#9733;</span>
+          </ng-template>
+        </ngb-rating>
+      </div>
+      <br>
+      <div class="ml-3 mb-3">
+        <button (click)="rateRoom()" class="btn btn-warning mb-2">Đánh giá</button>
+      </div>
 
     </div>
   </div>
 </div>
 <div class="row ml-5 mr-5 mb-1">
-  <div class="col-md-6">
-    <div class="room m-1">
+  <div class="col-xl-6">
+    <div class="room">
       <p class="m-1 text-center">Bình luận</p>
       <hr>
       <div class="m-1">
         <div *ngFor="let comment of comments| paginate: { itemsPerPage: 6, currentPage: p }">
-          <div class="row m-1">
+          <div *ngIf="currentUser.username == comment.username" class="row m-1">
+            <div class = "col-6"></div>
+            <div class="col-4 mycomment ml-2">
+              <p class="mt-3">{{comment.comment}}</p>
+            </div>
+            <div class="col-1">
+              <img class="mt-2" src="{{currentUser.imageUrls}}" alt="img cmt" width="37px" height="37px"
+                   style="border-radius: 50%">
+            </div>
+          </div>
+          <div *ngIf="currentUser.username != comment.username" class="row m-1">
             <div class="col-1">
               <img class="mt-2" src="{{comment.imageUrls}}" alt="img cmt" width="37px" height="37px"
                    style="border-radius: 50%">
@@ -51,10 +61,9 @@
             <div class="col-5 comment ml-2">
               <p class="mt-2"><b>{{comment.username}}</b>: <i>{{comment.comment}}</i></p>
             </div>
-
-            <hr>
           </div>
         </div>
+        <hr>
         <div class="text-center">
           <pagination-controls *ngIf="comments.length >=6" (pageChange)="p = $event" class="my-pagination"
                                previousLabel="Trước" nextLabel="Sau"

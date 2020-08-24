@@ -48,6 +48,12 @@ export class DetailRoomComponent implements OnInit {
         this.room = next;
         this.orders = this.room.orderForms;
         this.comments = this.room.listComment;
+        this.comments.sort((a, b) => {
+          const id1 = parseInt(a.id, 10);
+          const id2 = parseInt(b.id, 10);
+          return id1 - id2;
+        })
+        console.log(this.comments);
         this.getRatingByHouseId(this.room.id);
       }, error1 => {
         console.log(error1);
