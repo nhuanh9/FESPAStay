@@ -31,6 +31,7 @@ export class CreateOrderComponent implements OnInit {
   sub: Subscription;
   order: Order;
   currentUser: User;
+  currentTime = new Date();
 
   constructor(private houseService: HouseService,
               private  router: Router,
@@ -48,6 +49,7 @@ export class CreateOrderComponent implements OnInit {
   ngOnInit() {
     this.getDetailRoom();
     this.prepareForm();
+    console.log(this.currentTime);
   }
 
 
@@ -79,14 +81,17 @@ export class CreateOrderComponent implements OnInit {
       }, error => {
         console.log("Lỗi " + error);
       });
-
       this.userService.userDetail(value.id + '').subscribe(result => {
-        this.roomService.createOrder(this.room.id, result.id, this.order).subscribe(() => {
-          alert('Thêm order thành công!');
-          this.router.navigate(['/user/room/detail-room/' + this.room.id + '']);
-        }, error1 => {
-          console.log('Lỗi ' + error1);
-        });
+        if (this.order.formDate < this.currentTime.toDateString() || this.order.toDate <= this.currentTime.toDateString()) {
+          alert("Bạn phải chọn ngày từ sau ngày " + this.currentTime);
+        } else {
+          this.roomService.createOrder(this.room.id, result.id, this.order).subscribe(() => {
+            alert('Thêm order thành công!');
+            this.router.navigate(['/user/room/detail-room/' + this.room.id + '']);
+          }, error1 => {
+            console.log('Lỗi ' + error1);
+          });
+        }
       });
     });
   }

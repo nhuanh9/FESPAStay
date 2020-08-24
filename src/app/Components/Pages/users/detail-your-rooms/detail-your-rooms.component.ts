@@ -10,6 +10,7 @@ import {AuthenticationService} from '../../../../Services/authentication.service
 import {UserService} from '../../../../Services/user.service';
 import {Rating} from "../../../../model/rating";
 import {RatingService} from "../../../../Services/rating.service";
+import {User} from "../../../../model/user";
 
 @Component({
   selector: 'app-detail-your-rooms',
@@ -18,7 +19,7 @@ import {RatingService} from "../../../../Services/rating.service";
 })
 export class DetailYourRoomsComponent implements OnInit {
 
-
+  currentUser: User;
   room: Room;
   sub: Subscription;
   orders: Order[];
@@ -45,7 +46,11 @@ export class DetailYourRoomsComponent implements OnInit {
       id: ''
     }
     this.comments = [];
+    this.currentUser = {
+      imageUrls: ''
+    }
     this.getAllCommentsAndRating();
+    this.getCurrentUser();
   }
 
   prepareFormComment() {
@@ -64,6 +69,14 @@ export class DetailYourRoomsComponent implements OnInit {
         this.getRatingByHouseId(this.room.id);
       }, error1 => {
         console.log(error1);
+      });
+    });
+  }
+
+  getCurrentUser() {
+    this.authenticationService.currentUser.subscribe(value => {
+      this.userService.userDetail(value.id + '').subscribe(result => {
+        this.currentUser = result;
       });
     });
   }
@@ -92,6 +105,7 @@ export class DetailYourRoomsComponent implements OnInit {
       this.userService.userDetail(value.id + '').subscribe(result => {
         this.comment.username = result.username;
         this.comment.imageUrls = result.imageUrls;
+        this.currentUser = result;
         this.roomService.addComment(this.room.id, this.comment).subscribe(() => {
           this.getAllCommentsAndRating();
           this.prepareFormComment();
@@ -104,7 +118,7 @@ export class DetailYourRoomsComponent implements OnInit {
 
   private setNewComment() {
     this.comment = {
-      comment: this.commentForm.get('comment').value
+      comment: this.commentForm.get('comment').value + ' <Chủ nhà bình luận>'
     };
   }
 

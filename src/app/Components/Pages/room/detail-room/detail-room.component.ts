@@ -10,6 +10,7 @@ import {AuthenticationService} from '../../../../Services/authentication.service
 import {UserService} from '../../../../Services/user.service';
 import {RatingService} from "../../../../Services/rating.service";
 import {Rating} from "../../../../model/rating";
+import {User} from "../../../../model/user";
 
 @Component({
   selector: 'app-detail-room',
@@ -28,6 +29,7 @@ export class DetailRoomComponent implements OnInit {
   ratingForRoom: Rating;
   currentRatings: Rating[];
   avgCurrentRatings: number;
+  currentUser: User;
 
   constructor(private roomService: RoomService,
               private  router: Router,
@@ -76,11 +78,23 @@ export class DetailRoomComponent implements OnInit {
     });
   }
 
+  getCurrentUser() {
+    this.authenticationService.currentUser.subscribe(value => {
+      this.userService.userDetail(value.id + '').subscribe(result => {
+        this.currentUser = result;
+      });
+    });
+  }
+
   ngOnInit() {
     this.room = {
       id: ''
     }
     this.comments = [];
+    this.currentUser = {
+      imageUrls: ''
+    }
+    this.getCurrentUser();
     this.getAllCommentsAndRating();
     this.prepareFormComment();
   }

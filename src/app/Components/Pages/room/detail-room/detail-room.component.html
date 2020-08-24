@@ -40,11 +40,13 @@
   <div class="col-md-6">
     <div class="room m-1">
       <p class="m-1 text-center">Bình luận</p>
+      <hr>
       <div class="m-1">
         <div *ngFor="let comment of comments| paginate: { itemsPerPage: 6, currentPage: p }">
           <div class="row m-1">
             <div class="col-1">
-              <img class="mt-2" src="{{comment.imageUrls}}" alt="img cmt" width="37px" height="37px" style="border-radius: 50%">
+              <img class="mt-2" src="{{comment.imageUrls}}" alt="img cmt" width="37px" height="37px"
+                   style="border-radius: 50%">
             </div>
             <div class="col-5 comment ml-2">
               <p class="mt-2"><b>{{comment.username}}</b>: <i>{{comment.comment}}</i></p>
@@ -54,15 +56,24 @@
           </div>
         </div>
         <div class="text-center">
-          <pagination-controls *ngIf="comments.length >=6" (pageChange)="p = $event" class=""></pagination-controls>
+          <pagination-controls *ngIf="comments.length >=6" (pageChange)="p = $event" class="my-pagination"
+                               previousLabel="Trước" nextLabel="Sau"
+                               style="font-size: 10px !important;"></pagination-controls>
+          <hr>
         </div>
         <form [formGroup]="commentForm" (ngSubmit)="addComment()" class="form-group m-3 row">
-          <div class="form-group col-md-9">
-            <input type="textarea" class="form-control" formControlName="comment" placeholder="Input your comment...">
+          <div class="col-md-1">
+            <img class="" src="{{currentUser.imageUrls}}" alt="img cmt" width="37px" height="37px"
+                 style="border-radius: 50%">
           </div>
-          <input type="submit" class="btn btn-secondary mb-2 col-md-3 btn-sm" value="Bình luận">
+          <div class="form-group col-md-11">
+            <input type="textarea" class="form-control" formControlName="comment" placeholder="Input your comment..."
+                   style="border-radius: 30px;">
+          </div>
+          <input type="submit" class="btn btn-secondary mb-1" value="Bình luận" hidden>
         </form>
       </div>
     </div>
   </div>
 </div>
+
