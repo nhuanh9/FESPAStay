@@ -49,7 +49,8 @@ export class CreateOrderComponent implements OnInit {
   ngOnInit() {
     this.getDetailRoom();
     this.prepareForm();
-    console.log(this.currentTime);
+    console.log(this.currentTime.getTime()
+    );
   }
 
 
@@ -82,7 +83,10 @@ export class CreateOrderComponent implements OnInit {
         console.log("Lỗi " + error);
       });
       this.userService.userDetail(value.id + '').subscribe(result => {
-        if (this.order.formDate < this.currentTime.toDateString() || this.order.toDate <= this.currentTime.toDateString()) {
+        const fromDate = new Date(this.order.formDate);
+        const toDate = new Date(this.order.toDate);
+        console.log(fromDate < this.currentTime);
+        if (fromDate < this.currentTime || toDate <= this.currentTime) {
           alert("Bạn phải chọn ngày sau thời điểm hiện tại!");
         } else {
           this.roomService.createOrder(this.room.id, result.id, this.order).subscribe(() => {
