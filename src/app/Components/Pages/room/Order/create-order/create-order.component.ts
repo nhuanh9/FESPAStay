@@ -83,7 +83,7 @@ export class CreateOrderComponent implements OnInit {
       });
       this.userService.userDetail(value.id + '').subscribe(result => {
         if (this.order.formDate < this.currentTime.toDateString() || this.order.toDate <= this.currentTime.toDateString()) {
-          alert("Bạn phải chọn ngày từ sau ngày " + this.currentTime);
+          alert("Bạn phải chọn ngày sau thời điểm hiện tại!");
         } else {
           this.roomService.createOrder(this.room.id, result.id, this.order).subscribe(() => {
             alert('Thêm order thành công!');
