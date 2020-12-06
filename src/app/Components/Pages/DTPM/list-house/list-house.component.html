@@ -1,0 +1,21 @@
+<!--<app-carousel></app-carousel>-->
+<div class="text-center mt-5">
+  <h1>Danh sách</h1>
+  <a class="btn btn-primary" routerLink="/user/house/create-house">Tạo mới </a>
+</div>
+<div class="row ml-2 mr-3">
+  <div class="col-sm-6 col-lg-4 col-xl-3 mt-3 house " style="padding-right: 0px;"
+       *ngFor="let house of listHouse">
+    <div class="thumbnail">
+      <a [routerLink]="['/user/house/detail-your-house', house.idHouse]">
+        <img width="100%" height="220px" style="border-radius: 2px" src="{{house.price}}" class="imgProduct">
+      </a>
+      <div style="z-index: 2; position: inherit;">
+        <div class="productName m-3">
+          <a [routerLink]="['/user/house/detail-your-house', house.idHouse]" style="color: #000000;"><h4>{{house.name}}</h4>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

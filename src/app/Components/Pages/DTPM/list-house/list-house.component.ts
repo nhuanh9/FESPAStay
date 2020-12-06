@@ -40,18 +40,9 @@ export class ListHouseComponent implements OnInit {
     });
   }
 
-  private getCurrentUser() {
-    this.authenticationService.currentUser.subscribe(value => {
-      this.userService.userDetail(value.id + '').subscribe(result => {
-        this.currentUser = result;
-      });
-    });
-  }
-
   ngOnInit() {
     this.getAllHouse();
     this.getAllCategoryHouse();
-    this.getCurrentUser();
 
   }
 

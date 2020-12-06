@@ -53,7 +53,7 @@ export class DetailYourHouseComponent implements OnInit {
 
   ngOnInit() {
     this.house = {
-      nameHouse: ' '
+      name: ' '
     }
     this.getImagesAndRooms();
   }
@@ -63,8 +63,8 @@ export class DetailYourHouseComponent implements OnInit {
       const id = paraMap.get('id');
       this.houseService.detail(id).subscribe(next => {
         this.house = next;
-        this.getImageByHouseId(this.house.id);
-        this.getRoomsByHouseName(this.house.nameHouse);
+        this.getImageByHouseId(this.house.idHouse);
+        this.getRoomsByHouseName(this.house.name);
       }, error1 => {
         console.log(error1);
       });
@@ -78,11 +78,11 @@ export class DetailYourHouseComponent implements OnInit {
       this.sizeOfHouseImagesIsZero = true;
       this.image = {
         url: this.arrayPicture,
-        houseId: this.house.id
+        houseId: this.house.idHouse
       }
       this.houseImagesService.create(this.image).subscribe(value => {
         alert("Thêm ảnh thành công!");
-        this.getImageByHouseId(this.house.id);
+        this.getImageByHouseId(this.house.idHouse);
         this.arrayPicture = ''
       }, error => {
         console.log("Lỗi " + error);
