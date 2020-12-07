@@ -15,6 +15,8 @@ import * as firebase from 'firebase';
 import {Order} from '../../../../../model/order';
 import {OrderService} from '../../../../../Services/order.service';
 import {User} from "../../../../../model/user";
+import {HouseDayService} from "../../../../../Services/house-day.service";
+import {HouseDay} from "../../../../../model/houseDay";
 
 @Component({
   selector: 'app-create-order',
@@ -32,6 +34,9 @@ export class CreateOrderComponent implements OnInit {
   order: Order;
   currentUser: User;
   currentTime = new Date();
+  houseDays: HouseDay[];
+  listOrder: Order[];
+  oneDay = 86400000;
 
   constructor(private houseService: HouseService,
               private  router: Router,
@@ -42,27 +47,41 @@ export class CreateOrderComponent implements OnInit {
               private userService: UserService,
               private activateRoute: ActivatedRoute,
               private roomService: RoomService,
-              private orderService: OrderService
+              private orderService: OrderService,
+              private houseDayService: HouseDayService
   ) {
   }
 
   ngOnInit() {
-    this.getDetailRoom();
+    this.getDetailHouse();
     this.prepareForm();
-    console.log(this.currentTime.getTime()
-    );
+    // this.getListHouseDay();
+    // this.getListOrder();
   }
-
-
-  private getDetailRoom() {
+  private getDetailHouse() {
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
-      this.roomService.detail(id).subscribe(next => {
-        this.room = next;
+      this.houseService.detail(id).subscribe(next => {
+        this.house = next;
       }, error1 => {
         console.log(error1);
       });
     });
+  }
+
+  private getListHouseDay() {
+    this.houseDayService.getAll().subscribe(result => {
+      console.log(result)
+      this.houseDays = result;
+      console.log(this.houseDays);
+    })
+  }
+
+  private getListOrder() {
+    this.orderService.getAll().subscribe(result => {
+      console.log(result)
+      this.listOrder = result;
+    })
   }
 
   private prepareForm() {
@@ -75,43 +94,43 @@ export class CreateOrderComponent implements OnInit {
   }
 
   createOrder() {
-    this.authenticationService.currentUser.subscribe(value => {
-      this.userService.userDetail(value.id + '').subscribe(result => {
-        this.currentUser = result;
-        this.setNewOrder();
-      }, error => {
-        console.log("Lỗi " + error);
-      });
-      this.userService.userDetail(value.id + '').subscribe(result => {
-        const fromDate = new Date(this.order.formDate);
-        const toDate = new Date(this.order.toDate);
-        console.log(fromDate < this.currentTime);
-        if (fromDate < this.currentTime || toDate <= this.currentTime) {
-          alert("Bạn phải chọn ngày sau thời điểm hiện tại!");
-        } else if(toDate<fromDate) {
-          alert("Bạn cần chọn ngày vào nhỏ hơn ngày ra!");
-        } else {
-          this.roomService.createOrder(this.room.id, result.id, this.order).subscribe(() => {
-            alert('Thêm order thành công!');
-            this.router.navigate(['/user/room/detail-room/' + this.room.id + '']);
-          }, error1 => {
-            console.log('Lỗi ' + error1);
-          });
+    this.setNewOrder();
+    let flag = true;
+    let newOrder = this.order;
+    let orderService = this.orderService;
+    this.orderService.getAll().subscribe(result => {
+      result.forEach(function (value) {
+        if (newOrder.house.idHouse == value.house.idHouse && (newOrder.startDate < value.startDate || newOrder.endDate < value.startDate ||newOrder.startDate < value.endDate || newOrder.endDate < value.endDate)) {
+          console.log("id new: "+newOrder.house.idHouse +", idVal: "+value.house.idHouse);
+          console.log("Time 1: "+newOrder.startDate +" -> "+newOrder.endDate);
+          console.log("Time 2: "+value.startDate +" -> "+value.endDate);
+          flag = false;
         }
-      });
-    });
+
+      })
+      if (flag) {
+        this.orderService.createOrder(this.order).subscribe(() => {
+          alert("Tạo hoá đơn thành công!");
+          this.router.navigate(['/']);
+        }, error => {
+          console.log("Lỗi: " + error);
+        });
+      } else {
+        alert("Đã có người đặt nhà trong khoảng thời gian: "+this.order.startDate+" đến: "+this.order.endDate+", vui lòng chọn thời gian khác hoặc nhà phù hợp hơn!");
+      }
+    })
+
   }
 
   private setNewOrder() {
     this.order = {
-      nameGuest: this.createForm.get('nameGuest').value,
-      phoneNumber: this.createForm.get('phoneNumber').value,
-      formDate: this.createForm.get('formDate').value,
-      toDate: this.createForm.get('toDate').value,
-      timeOrder: '',
-      total: '',
-      userId: this.currentUser.id,
-      roomName: this.room.nameRoom
+      personName: this.createForm.get('nameGuest').value,
+      telephoneNumber: this.createForm.get('phoneNumber').value,
+      startDate: this.createForm.get('formDate').value,
+      endDate: this.createForm.get('toDate').value,
+      bookingDate: Date.now().toString(),
+      account: 'admin',
+      house: this.house
     };
   }
 }

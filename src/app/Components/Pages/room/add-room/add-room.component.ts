@@ -69,9 +69,9 @@ export class AddRoomComponent implements OnInit {
       this.setNewRoom();
       this.userService.userDetail(value.id + '').subscribe(result => {
         this.room.nameHost = result.username;
-        this.houseService.createRoom(this.house.id, this.room).subscribe(() => {
+        this.houseService.createRoom(this.house.idHouse, this.room).subscribe(() => {
           alert('Thêm room thành công!');
-          this.router.navigate(['/user/house/detail-house/' + this.house.id]);
+          this.router.navigate(['/user/house/detail-house/' + this.house.idHouse]);
         }, error1 => {
           console.log('Lỗi ' + error1);
         });
@@ -81,7 +81,7 @@ export class AddRoomComponent implements OnInit {
 
   private setNewRoom() {
     this.room = {
-      nameHouse: this.house.nameHouse,
+      nameHouse: this.house.name,
       nameRoom: this.createForm.get('nameRoom').value,
       priceRoom: this.createForm.get('priceRoom').value,
       description: this.createForm.get('description').value,

@@ -1,15 +1,12 @@
 import {CommentToRoom} from './comment';
 
 export interface Order {
-  id?: string;
-  nameGuest?: string;
-  nameHouse?: string;
-  roomName?: string;
-  phoneNumber?: string;
-  timeOrder?: string;
-  formDate?: string;
-  toDate?: string;
-  total?: string;
-  statusOder?: string;
-  userId?: number;
+  idOrder?: string;
+  personName?: string;
+  telephoneNumber?: string;
+  bookingDate?: string;
+  startDate?: string;
+  endDate?: string;
+  account?: string;
+  house?: any;
 }

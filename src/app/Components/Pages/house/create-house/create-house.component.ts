@@ -73,14 +73,16 @@ export class CreateHouseComponent implements OnInit {
 
   setNewHouse() {
     this.house = {
-      hostName: this.createForm.get('hostName').value,
-      nameHouse: this.createForm.get('nameHouse').value,
+      account: this.createForm.get('hostName').value,
+      name: this.createForm.get('nameHouse').value,
       categoryHouse: this.categoryHouse,
-      amountBathRoom: this.createForm.get('amountBathRoom').value,
-      amountBedRoom: this.createForm.get('amountBedRoom').value,
+      roomNumber: this.createForm.get('amountBathRoom').value,
       address: this.createForm.get('address').value,
       description: this.createForm.get('description').value,
-      imageUrls: this.arrayPicture
+      price: this.arrayPicture,
+      imageList: [{
+        link: ''
+      }]
     };
   }
 
@@ -89,21 +91,15 @@ export class CreateHouseComponent implements OnInit {
   }
 
   createHouse() {
-    this.authenticationService.currentUser.subscribe(value => {
       this.setCategoryForFormData();
       this.setNewHouse();
-      this.userService.userDetail(value.id + '').subscribe(result => {
-        this.house.hostName = result.username;
-        this.currentUser = result;
-        console.log(this.house);
-        this.houseService.create(this.currentUser.id, this.house).subscribe(() => {
-          alert('Thêm thành công!');
-          this.returnHome();
-        }, error1 => {
-          console.log('Lỗi ' + error1);
-        });
+      console.log(this.house)
+      this.houseService.create(this.house).subscribe(() => {
+        alert('Thêm thành công!');
+        this.returnHome();
+      }, error1 => {
+        console.log('Lỗi ' + error1);
       });
-    });
   }
 
   saveImg(value) {

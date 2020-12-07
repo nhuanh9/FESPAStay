@@ -5,13 +5,13 @@
       <h2>Sửa thông tin nhà </h2>
     </div>
     <div class="card-body">
-      <img src="{{house.imageUrls}}" alt="Image House" width="100%">
+      <img src="{{house.price}}" alt="Image House" width="100%">
       <form [formGroup]="editForm" (ngSubmit)="editHouse()" class="form-group">
         <div class="text-left">
           <label>Tên nhà </label>
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" formControlName="nameHouse" placeholder="Input your house name..." value="{{house.nameHouse}}">
+          <input type="text" class="form-control" formControlName="nameHouse" placeholder="Input your house name..." value="{{house.name}}">
           <div class="alert alert-danger mt-1" role="alert"
                *ngIf="editForm.get('nameHouse').invalid && editForm.get('nameHouse').touched">
             Chưa nhập tên nhà!
@@ -45,21 +45,10 @@
         </div>
         <div class="form-group">
           <input type="number" class="form-control" formControlName="amountBathRoom"
-                 placeholder="Bathrooms ...." value="{{house.amountBathRoom}}">
+                 placeholder="Bathrooms ...." value="{{house.roomNumber}}">
           <div class="alert alert-danger mt-1" role="alert"
                *ngIf="editForm.get('amountBathRoom').invalid && editForm.get('amountBathRoom').touched">
             Chưa nhập số lượng phòng tắm!
-          </div>
-        </div>
-        <div class="text-left">
-          <label>Số lượng phòng ngủ</label>
-        </div>
-        <div class="form-group">
-          <input type="number" class="form-control" formControlName="amountBedRoom"
-                 placeholder="Bedrooms ...." value="{{house.amountBedRoom}}">
-          <div class="alert alert-danger mt-1" role="alert"
-               *ngIf="editForm.get('amountBedRoom').invalid && editForm.get('amountBedRoom').touched">
-            Chưa nhập số lượng phòng ngủ!
           </div>
         </div>
         <div class="text-left">

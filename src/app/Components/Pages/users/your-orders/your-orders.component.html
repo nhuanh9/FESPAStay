@@ -6,12 +6,12 @@
     <div class="ml-5">
       <div class="row">
         <div class="m-1">
-          Người đặt: {{order.nameGuest}}
+          Người đặt: {{order.personName}}
         </div>
       </div>
       <div class="row">
         <div class=" m-1">
-          Số điện thoại: 0{{order.phoneNumber}}
+          Số điện thoại: 0{{order.telephoneNumber}}
         </div>
       </div>
       <div class="row">
@@ -26,17 +26,17 @@
       </div>
       <div class="row">
         <div class=" m-1">
-          Từ ngày: {{order.formDate.substring(0, 10)| date : 'dd/MM/yyyy'}}
+          Từ ngày: {{order.startDate.substring(0, 10)| date : 'dd/MM/yyyy'}}
         </div>
       </div>
       <div class="row">
         <div class=" m-1">
-          Đến : {{order.toDate.substring(0, 10)| date : 'dd/MM/yyyy'}}
+          Đến : {{order.endDate.substring(0, 10)| date : 'dd/MM/yyyy'}}
         </div>
       </div>
       <div class="row">
         <div class=" m-1">
-          Tông tiền: {{order.total}}
+          Tông tiền: {{order.account}}
         </div>
       </div>
       <div class="row">

@@ -9,13 +9,17 @@ import {Order} from '../model/order';
   providedIn: 'root'
 })
 export class OrderService {
-  API_URL = environment.apiUrl + '/order';
+  API_URL = environment.apiUrl + '/orders';
 
   constructor(private http: HttpClient) {
   }
 
   getAll(): Observable<Order[]> {
     return this.http.get<Order[]>(this.API_URL);
+  }
+
+  createOrder(order): Observable<Order> {
+    return this.http.post<Order>(this.API_URL, order);
   }
 
   delete(id: string): Observable<Order> {

@@ -50,7 +50,6 @@ export class EditHouseComponent implements OnInit {
       categoryHouse: ['', [Validators.required]],
       address: ['', [Validators.required]],
       amountBathRoom: ['', [Validators.required]],
-      amountBedRoom: ['', [Validators.required]],
       gender: ['', [Validators.required]],
       rooms: ['', [Validators.required]],
       description: ['', [Validators.required]]
@@ -66,28 +65,20 @@ export class EditHouseComponent implements OnInit {
   getOldHouse(id) {
     this.houseService.detail(id).subscribe(next => {
       this.house = next;
-      this.idHouse = this.house.id;
+      this.idHouse = this.house.idHouse;
     });
   }
 
-  getAllRooms() {
-    this.roomService.getAll().subscribe(next => {
-      this.rooms = next;
-    }, error => {
-      console.log(error);
-    });
-  }
 
-  getHouseAndAllRooms() {
+  getHouse() {
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
       this.getOldHouse(id);
-      this.getAllRooms();
     });
   }
 
   ngOnInit() {
-    this.getHouseAndAllRooms();
+    this.getHouse();
     this.prepareForm();
     this.getAllCategoryHouse();
   }
@@ -109,30 +100,28 @@ export class EditHouseComponent implements OnInit {
 
   setNewHouse() {
     let house: House = {
-      hostName: this.editForm.get('hostName').value,
-      nameHouse: this.editForm.get('nameHouse').value,
+      account: this.editForm.get('hostName').value,
+      name: this.editForm.get('nameHouse').value,
       categoryHouse: this.categoryHouse,
-      amountBathRoom: this.editForm.get('amountBathRoom').value,
-      amountBedRoom: this.editForm.get('amountBedRoom').value,
+      roomNumber: this.editForm.get('amountBathRoom').value,
       address: this.editForm.get('address').value,
       description: this.editForm.get('description').value,
-      imageUrls: this.arrayPicture
+      price: this.arrayPicture,
+      imageList: [{
+        link: ''
+      }]
     };
     return house;
   }
 
   editHouse() {
-    this.authenticationService.currentUser.subscribe(value => {
-      this.userService.userDetail(value.id + '').subscribe(result => {
         this.setCategoryForFormData();
         this.houseService.edit(this.setNewHouse(), this.idHouse).subscribe(() => {
           alert('Sửa thành công!');
-          this.router.navigate(['/user/house/detail-your-house/' + this.house.id]);
+          this.router.navigate(['/user/house/detail-your-house/' + this.house.idHouse]);
         }, error1 => {
           console.log('Lỗi ' + error1);
         });
-      });
-    });
   }
 
   saveImg(value) {

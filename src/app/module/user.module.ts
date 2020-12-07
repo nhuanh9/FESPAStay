@@ -12,13 +12,8 @@ import {ListYourRoomsComponent} from '../Components/Pages/users/list-your-rooms/
 const routes: Routes = [
   {
     path: 'house',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     loadChildren: () => import('./house.module').then(module => module.HouseModule)
-  },
-  {
-    path: 'room',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./room.module').then(module => module.RoomModule)
   },
   {
     path: 'update-profile/:id',
@@ -29,7 +24,7 @@ const routes: Routes = [
     component: ProfileComponent
   },
   {
-    path: 'list-your-house/:id',
+    path: 'list-your-house',
     component: ListYourHouseComponent
   },
   {

@@ -9,7 +9,7 @@ import {Room} from '../model/room';
   providedIn: 'root'
 })
 export class HouseService {
-  API_URL = environment.apiUrl + '/house';
+  API_URL = environment.apiUrl + '/houses';
 
   constructor(private http: HttpClient) {
   }
@@ -18,8 +18,8 @@ export class HouseService {
     return this.http.get<House[]>(this.API_URL);
   }
 
-  create(userId, house): Observable<House> {
-    return this.http.post<House>(this.API_URL + `/user/${userId}`, house);
+  create(house): Observable<House> {
+    return this.http.post<House>(this.API_URL, house);
   }
 
   detail(id: string): Observable<House> {

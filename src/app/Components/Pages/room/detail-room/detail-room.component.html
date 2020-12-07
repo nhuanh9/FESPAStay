@@ -44,13 +44,9 @@
       <div class="m-1">
         <div *ngFor="let comment of comments| paginate: { itemsPerPage: 6, currentPage: p }">
           <div *ngIf="currentUser.username == comment.username" class="row m-1">
-            <div class = "col-6"></div>
-            <div class="col-4 mycomment ml-2">
+            <div class = "col-7"></div>
+            <div class="col-4 mycomment">
               <p class="mt-3">{{comment.comment}}</p>
-            </div>
-            <div class="col-1">
-              <img class="mt-2" src="{{currentUser.imageUrls}}" alt="img cmt" width="37px" height="37px"
-                   style="border-radius: 50%">
             </div>
           </div>
           <div *ngIf="currentUser.username != comment.username" class="row m-1">
@@ -58,7 +54,7 @@
               <img class="mt-2" src="{{comment.imageUrls}}" alt="img cmt" width="37px" height="37px"
                    style="border-radius: 50%">
             </div>
-            <div class="col-5 comment ml-2">
+            <div class="col-4 comment ml-2">
               <p class="mt-2"><b>{{comment.username}}</b>: <i>{{comment.comment}}</i></p>
             </div>
           </div>

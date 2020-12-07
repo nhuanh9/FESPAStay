@@ -11,6 +11,8 @@ import {UserService} from '../../../../Services/user.service';
 import {House} from '../../../../model/House';
 import {HouseService} from '../../../../Services/house.service';
 import {User} from '../../../../model/user';
+import {CategoryHouse} from "../../../../model/categoryHouse";
+import {CategoryHouseService} from "../../../../Services/category-house.service";
 
 @Component({
   selector: 'app-list-your-house',
@@ -19,24 +21,21 @@ import {User} from '../../../../model/user';
 })
 export class ListYourHouseComponent implements OnInit {
 
+  p = 1;
   listHouse: House[];
-  sub: Subscription;
+  listCategoryHouse: CategoryHouse[];
+  nameHouse: string[];
   currentUser: User;
+  message = true;
 
   constructor(private houseService: HouseService,
-              private  router: Router,
-              private fb: FormBuilder,
-              private activateRoute: ActivatedRoute,
               private authenticationService: AuthenticationService,
-              private userService: UserService) {
+              private userService: UserService,
+              private categoryHouseService: CategoryHouseService) {
   }
-
   ngOnInit() {
-    this.authenticationService.currentUser.subscribe(value => {
-      this.userService.userDetail(value.id + '').subscribe(result => {
-        this.currentUser = result;
-        this.listHouse = this.currentUser.houseList;
-      });
+    this.categoryHouseService.getAll().subscribe(next => {
+      this.listCategoryHouse = next;
     });
   }
 }

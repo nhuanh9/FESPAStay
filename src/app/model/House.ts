@@ -1,13 +1,12 @@
 export interface House {
-  id?: string;
-  hostName?: string;
-  nameHouse?: string;
-  categoryHouse?: any;
-  amountBathRoom?: string;
-  amountBedRoom?: string;
+  idHouse?: string;
+  account?: string;
+  name?: string;
   address?: string;
+  categoryHouse?: any;
+  roomNumber?: string;
   description?: string;
-  imageUrls?: string;
-  rooms?: any;
-  user?: any;
+  price?: string;
+  utilities?: any;
+  imageList?: any;
 }

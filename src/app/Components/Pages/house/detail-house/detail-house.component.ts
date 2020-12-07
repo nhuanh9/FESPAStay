@@ -53,14 +53,14 @@ export class DetailHouseComponent implements OnInit {
 
   ngOnInit() {
     this.house = {
-      nameHouse: ' '
+      name: ' '
     }
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
       this.houseService.detail(id).subscribe(next => {
         this.house = next;
-        this.getImageById(this.house.id);
-        this.getAllByHouseName(this.house.nameHouse);
+        this.getImageById(this.house.idHouse);
+        this.getAllByHouseName(this.house.name);
       }, error1 => {
         console.log(error1);
       });
