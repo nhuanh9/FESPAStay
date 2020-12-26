@@ -30,64 +30,24 @@ export class DetailYourHouseComponent implements OnInit {
               private houseImagesService: HouseImagesService) {
   }
 
-  getImageByHouseId(id) {
-    this.houseImagesService.getAllByIdHouse(id).subscribe(value => {
-      this.houseImages = value;
-      console.log(this.houseImages);
-    }, error => {
-      console.log("Lỗi " + error);
-    })
-  }
-
-  getRoomsByHouseName(houseName) {
-    this.roomService.getAllByHouseName(houseName).subscribe(value => {
-      this.rooms = value;
-      if (this.rooms.length === 0) {
-        this.sizeOfRoomsIsZero = false;
-      } else {
-        this.sizeOfRoomsIsZero = true;
-      }
-    })
-  }
 
 
   ngOnInit() {
     this.house = {
       name: ' '
     }
-    this.getImagesAndRooms();
+    this.getImages();
   }
 
-  private getImagesAndRooms() {
+  private getImages() {
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
       this.houseService.detail(id).subscribe(next => {
         this.house = next;
-        this.getImageByHouseId(this.house.idHouse);
-        this.getRoomsByHouseName(this.house.name);
       }, error1 => {
         console.log(error1);
       });
     });
-  }
-
-  addImage() {
-    if (this.arrayPicture == '') {
-      this.sizeOfHouseImagesIsZero = false;
-    } else {
-      this.sizeOfHouseImagesIsZero = true;
-      this.image = {
-        url: this.arrayPicture,
-        houseId: this.house.idHouse
-      }
-      this.houseImagesService.create(this.image).subscribe(value => {
-        alert("Thêm ảnh thành công!");
-        this.getImageByHouseId(this.house.idHouse);
-        this.arrayPicture = ''
-      }, error => {
-        console.log("Lỗi " + error);
-      })
-    }
   }
 
   saveImg(value) {

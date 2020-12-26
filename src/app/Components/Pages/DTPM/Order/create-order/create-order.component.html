@@ -39,6 +39,15 @@
         <div class="form-group">
           <input type="date" class="form-control" formControlName="toDate">
         </div>
+        <div class="text-left">
+          <label>Dịch vụ đi kèm</label>
+        </div>
+        <div  class="form-group text-left ">
+          <label *ngFor="let data of services; let i=index">
+            <input type="checkbox" class="ml-2" [value]="data.idService" (change)="onCheckboxChange($event)" />
+            {{data.name}}(<i>{{data.price}}$</i>)
+          </label>
+        </div>
         <input type="submit" class="btn btn-secondary mr-2" value="Tạo">
         <button type="button" class="btn btn-danger " routerLink="">Huỷ</button>
       </form>

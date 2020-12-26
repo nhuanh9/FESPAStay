@@ -9,4 +9,5 @@ export interface Order {
   endDate?: string;
   account?: string;
   house?: any;
+  services?:any;
 }
