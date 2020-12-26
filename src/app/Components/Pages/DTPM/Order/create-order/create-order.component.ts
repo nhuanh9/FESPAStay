@@ -101,9 +101,9 @@ export class CreateOrderComponent implements OnInit {
     this.orderService.getAll().subscribe(result => {
       result.forEach(function (value) {
         if (newOrder.house.idHouse == value.house.idHouse && (newOrder.startDate < value.startDate || newOrder.endDate < value.startDate ||newOrder.startDate < value.endDate || newOrder.endDate < value.endDate)) {
-          console.log("id new: "+newOrder.house.idHouse +", idVal: "+value.house.idHouse);
-          console.log("Time 1: "+newOrder.startDate +" -> "+newOrder.endDate);
-          console.log("Time 2: "+value.startDate +" -> "+value.endDate);
+          // console.log("id new: "+newOrder.house.idHouse +", idVal: "+value.house.idHouse);
+          // console.log("Time 1: "+newOrder.startDate +" -> "+newOrder.endDate);
+          // console.log("Time 2: "+value.startDate +" -> "+value.endDate);
           flag = false;
         }
 

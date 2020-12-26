@@ -4,12 +4,7 @@
 <div class="row ml-5 mr-5 detail">
   <div class="col-md-6 m-3">
     <div class="row">
-      <img width="100%" src="{{house.price}}" class="mb-1">
-    </div>
-    <div class="row">
-      <div *ngFor="let image of houseImages" class="col-lg-3 col-md-4 col-sm-4 col-6 p-0 images">
-          <img src="{{image.url}}" class="p-1" width="100%" height="100px">
-      </div>
+      <img width="100%" src="{{house.imageUrls}}" class="mb-1">
     </div>
   </div>
   <div class="col-md-5">
@@ -20,6 +15,10 @@
         <p>Địa chỉ: {{house.address}}</p>
         <p>Số lượng phòng tắm: {{house.roomNumber}}</p>
         <p>Mô tả: {{house.description}}</p>
+        <p>Các dịch vụ có sẵn(<i>Miễn phí</i> ): </p>
+        <ul>
+          <li *ngFor="let utility of house.utilities">{{utility.name}}</li>
+        </ul>
       </div>
     </div>
     <div class="row">

@@ -9,4 +9,5 @@ export interface House {
   price?: string;
   utilities?: any;
   imageList?: any;
+  imageUrls?: any;
 }

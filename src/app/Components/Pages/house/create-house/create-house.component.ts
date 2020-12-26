@@ -42,6 +42,7 @@ export class CreateHouseComponent implements OnInit {
       hostName: ['', [Validators.required]],
       nameHouse: ['', [Validators.required]],
       categoryHouse: ['', [Validators.required]],
+      price: ['', [Validators.required]],
       address: ['', [Validators.required]],
       amountBathRoom: ['', [Validators.required]],
       amountBedRoom: ['', [Validators.required]],
@@ -79,10 +80,11 @@ export class CreateHouseComponent implements OnInit {
       roomNumber: this.createForm.get('amountBathRoom').value,
       address: this.createForm.get('address').value,
       description: this.createForm.get('description').value,
-      price: this.arrayPicture,
+      price: this.createForm.get('price').value,
       imageList: [{
         link: ''
-      }]
+      }],
+      imageUrls : this.arrayPicture
     };
   }
 

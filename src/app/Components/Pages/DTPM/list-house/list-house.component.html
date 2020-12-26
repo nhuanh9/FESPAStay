@@ -8,7 +8,7 @@
        *ngFor="let house of listHouse">
     <div class="thumbnail">
       <a [routerLink]="['/user/house/detail-your-house', house.idHouse]">
-        <img width="100%" height="220px" style="border-radius: 2px" src="{{house.price}}" class="imgProduct">
+        <img width="100%" height="220px" style="border-radius: 2px" src="{{house.imageUrls}}" class="imgProduct">
       </a>
       <div style="z-index: 2; position: inherit;">
         <div class="productName m-3">
