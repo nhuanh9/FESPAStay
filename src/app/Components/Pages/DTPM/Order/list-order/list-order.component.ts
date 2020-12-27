@@ -8,6 +8,9 @@ import {RoomService} from '../../../../../Services/room.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {AuthenticationService} from '../../../../../Services/authentication.service';
 import {UserService} from '../../../../../Services/user.service';
+import {ServicesService} from "../../../../../Services/services.service";
+import {Services} from "../../../../../model/services";
+import {OrderService} from "../../../../../Services/order.service";
 
 @Component({
   selector: 'app-list-order',
@@ -15,14 +18,12 @@ import {UserService} from '../../../../../Services/user.service';
   styleUrls: ['./list-order.component.scss']
 })
 export class ListOrderComponent implements OnInit {
-
-  room: Room;
   sub: Subscription;
   orders: Order[];
   comments: CommentToRoom[];
   comment: CommentToRoom;
 
-  constructor(private roomService: RoomService,
+  constructor(private orderService: OrderService,
               private  router: Router,
               private fb: FormBuilder,
               private activateRoute: ActivatedRoute
@@ -30,19 +31,13 @@ export class ListOrderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
-      const id = paraMap.get('id');
-      this.getOrderById(id);
-    });
+    this.getOrders();
   }
 
-  private getOrderById(id: string) {
-    this.roomService.detail(id).subscribe(next => {
-      this.room = next;
-      this.orders = this.room.orderForms;
-      console.log(this.orders);
-    }, error1 => {
-      console.log(error1);
-    });
+  private getOrders() {
+    this.orderService.getAll().subscribe(result => {
+      this.orders = result;
+      console.log(result);
+    })
   }
 }

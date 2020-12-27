@@ -8,6 +8,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {EditHouseComponent} from '../Components/Pages/house/edit-house/edit-house.component';
 import {AddRoomComponent} from '../Components/Pages/room/add-room/add-room.component';
 import {DetailYourHouseComponent} from '../Components/Pages/DTPM/detail-your-house/detail-your-house.component';
+import {ListOrderComponent} from "../Components/Pages/DTPM/Order/list-order/list-order.component";
 
 const routing: Routes = [
   {
@@ -35,6 +36,10 @@ const routing: Routes = [
     component: EditHouseComponent,
     // canActivate: [AuthGuard]
   },
+  {
+    path:'orders',
+    component: ListOrderComponent
+  }
 ];
 
 @NgModule({
@@ -43,7 +48,8 @@ const routing: Routes = [
     CreateHouseComponent,
     AddRoomComponent,
     EditHouseComponent,
-    DetailYourHouseComponent
+    DetailYourHouseComponent,
+    ListOrderComponent
   ],
   imports: [
     CommonModule,

@@ -1,40 +1,40 @@
-<div class="col-12 mt-5">
-  <h2>Danh sách đơn đặt phòng {{room.nameRoom}} ( {{room.nameHouse}})</h2>
-  <div class="" *ngFor="let order of orders;">
-    <div class="row m-3 room">
-      <div class="ml-5">
-        <div class="row">
-          <div class="m-1">
-            <h1>Người đặt: {{order.personName}}</h1>
-          </div>
+<div class="row text-center">
+  <div class="col-12">
+    <h1>Đơn đặt nhà của bạn</h1>
+  </div>
+</div>
+<div class="" *ngFor="let order of orders;">
+  <div class="row m-3 room">
+    <div class="m-5">
+      <div class="row">
+        <div class="col-6">
+          <h1>Người đặt: {{order.personName}}</h1>
         </div>
-        <div class="row">
-          <div class=" m-1">
-            Số điện thoại {{order.telephoneNumber}}
-          </div>
+        <div class="col-6">
         </div>
-        <div class="row">
-          <div class=" m-1">
-            Từ ngày: {{order.startDate.substring(0, 10)}}
-          </div>
+        <div class="col-6">
+          Tên nhà: {{order.house.name}}
         </div>
-        <div class="row">
-          <div class=" m-1">
-            Đến : {{order.endDate.substring(0, 10)}}
-          </div>
+        <div class="col-6">
+          Địa chỉ nhà: {{order.house.address}}
         </div>
-        <div class="row">
-          <div class=" m-1">
-            Tông tiền: {{order.account}}
-          </div>
+        <div class="col-6">
+          Số điện thoại người thuê: {{order.telephoneNumber}}
         </div>
-        <div class="row">
-          <div class=" m-1" *ngIf="order.statusOder === 'WaitAccept'">
-            Trạng thái: Chờ xác nhận
-          </div>
+        <div class="col-6">
+          Số điện thoại chủ nhà: 0359813619
+        </div>
+        <div class="col-6">
+          Tổng tiền:  {{order.totalPrice}}$
+        </div>
+        <div class="col-6">
+          Ngày đặt: {{order.bookingDate.substring(0, 10)| date : 'dd/MM/yyyy'}}
+        </div>
+        <div class="col-6">
+          Từ ngày: {{order.startDate.substring(0, 10)| date : 'dd/MM/yyyy'}}
+          đến: {{order.endDate.substring(0, 10)| date : 'dd/MM/yyyy'}}
         </div>
       </div>
     </div>
-
   </div>
 </div>

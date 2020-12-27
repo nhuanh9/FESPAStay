@@ -146,7 +146,7 @@ export class CreateOrderComponent implements OnInit {
       if (flag) {
         this.orderService.createOrder(this.order).subscribe(() => {
           alert("Tạo hoá đơn thành công!");
-          this.router.navigate(['/']);
+          this.router.navigate(['/user/house/orders']);
         }, error => {
           console.log("Lỗi: " + error);
         });

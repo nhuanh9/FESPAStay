@@ -9,5 +9,8 @@ export interface Order {
   endDate?: string;
   account?: string;
   house?: any;
-  services?:any;
+  services?: any;
+  servicePrice?: any;
+  housePrice?: any;
+  totalPrice?: any;
 }
