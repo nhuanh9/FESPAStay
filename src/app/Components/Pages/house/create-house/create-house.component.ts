@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import * as firebase from 'firebase';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {House} from '../../../../model/House';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {CategoryHouse} from '../../../../model/categoryHouse';
 import {CategoryRoom} from '../../../../model/categoryRoom';
 import {CategoryHouseService} from '../../../../Services/category-house.service';
@@ -12,6 +12,8 @@ import {CategoryRoomService} from '../../../../Services/category-room.service';
 import {AuthenticationService} from '../../../../Services/authentication.service';
 import {UserService} from '../../../../Services/user.service';
 import {User} from '../../../../model/user';
+import {UtilityService} from "../../../../Services/utility.service";
+import {Utility} from "../../../../model/utility";
 
 @Component({
   selector: 'app-create-house',
@@ -26,6 +28,8 @@ export class CreateHouseComponent implements OnInit {
   currentUser: User;
   listCategoryHouse: CategoryHouse[];
   categoryHouse: CategoryHouse;
+  utilities: Utility[];
+  utilitiesSelected: any[];
 
   constructor(private houseService: HouseService,
               private  router: Router,
@@ -33,7 +37,8 @@ export class CreateHouseComponent implements OnInit {
               private fb: FormBuilder,
               private categoryHouseService: CategoryHouseService,
               private authenticationService: AuthenticationService,
-              private userService: UserService
+              private userService: UserService,
+              private utilityService: UtilityService
   ) {
   }
 
@@ -48,7 +53,8 @@ export class CreateHouseComponent implements OnInit {
       amountBedRoom: ['', [Validators.required]],
       gender: ['', [Validators.required]],
       rooms: ['', [Validators.required]],
-      description: ['', [Validators.required]]
+      description: ['', [Validators.required]],
+      utilities: this.fb.array([])
     });
   }
 
@@ -58,9 +64,36 @@ export class CreateHouseComponent implements OnInit {
     });
   }
 
+  getListUtility() {
+    this.utilityService.getAll().subscribe(result => {
+      this.utilities = result;
+    })
+  }
+
   ngOnInit() {
     this.prepareForm();
     this.getListCategoryHouse();
+    this.getListUtility();
+    this.utilitiesSelected = [];
+  }
+
+  onCheckboxChange(e) {
+    const checkArray: FormArray = this.createForm.get('utilities') as FormArray;
+
+    if (e.target.checked) {
+      checkArray.push(new FormControl(e.target.value));
+      // @ts-ignore
+      this.utilitiesSelected.push({idUtilitie: (new FormControl(e.target.value)).value});
+    } else {
+      let i: number = 0;
+      checkArray.controls.forEach((item: FormControl) => {
+        if (item.value == e.target.value) {
+          checkArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
   }
 
   setCategoryForFormData() {
@@ -84,7 +117,8 @@ export class CreateHouseComponent implements OnInit {
       imageList: [{
         link: ''
       }],
-      imageUrls : this.arrayPicture
+      imageUrls: this.arrayPicture,
+      utilities: this.utilitiesSelected
     };
   }
 
@@ -93,15 +127,15 @@ export class CreateHouseComponent implements OnInit {
   }
 
   createHouse() {
-      this.setCategoryForFormData();
-      this.setNewHouse();
-      console.log(this.house)
-      this.houseService.create(this.house).subscribe(() => {
-        alert('Thêm thành công!');
-        this.returnHome();
-      }, error1 => {
-        console.log('Lỗi ' + error1);
-      });
+    this.setCategoryForFormData();
+    this.setNewHouse();
+    console.log(this.house)
+    this.houseService.create(this.house).subscribe(() => {
+      alert('Thêm thành công!');
+      this.returnHome();
+    }, error1 => {
+      console.log('Lỗi ' + error1);
+    });
   }
 
   saveImg(value) {

@@ -1,5 +1,5 @@
 export interface Utility {
-  id?: string;
+  idUtilitie?: string;
   name?: string;
   description?: string;
 }
