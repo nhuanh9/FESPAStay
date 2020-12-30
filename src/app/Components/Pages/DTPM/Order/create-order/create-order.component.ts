@@ -29,16 +29,13 @@ export class CreateOrderComponent implements OnInit {
 
 
   house: House;
-  arrayPicture = '';
   createForm: FormGroup;
   room: Room;
   sub: Subscription;
   order: Order;
   currentUser: User;
-  currentTime = new Date();
   houseDays: HouseDay[];
   listOrder: Order[];
-  oneDay = 86400000;
   services: Services[];
   servicesSelected: any[];
 
@@ -60,8 +57,6 @@ export class CreateOrderComponent implements OnInit {
   ngOnInit() {
     this.getDetailHouse();
     this.prepareForm();
-    // this.getListHouseDay();
-    // this.getListOrder();
     this.getServices()
     this.servicesSelected = [];
   }
@@ -84,7 +79,6 @@ export class CreateOrderComponent implements OnInit {
       });
     });
   }
-
   private getListHouseDay() {
     this.houseDayService.getAll().subscribe(result => {
       console.log(result)

@@ -10,4 +10,5 @@ export interface House {
   utilities?: any;
   imageList?: any;
   imageUrls?: any;
+  services?: any;
 }

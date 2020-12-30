@@ -14,6 +14,8 @@ import {UserService} from '../../../../Services/user.service';
 import {User} from '../../../../model/user';
 import {UtilityService} from "../../../../Services/utility.service";
 import {Utility} from "../../../../model/utility";
+import {Services} from "../../../../model/services";
+import {ServicesService} from "../../../../Services/services.service";
 
 @Component({
   selector: 'app-create-house',
@@ -30,6 +32,8 @@ export class CreateHouseComponent implements OnInit {
   categoryHouse: CategoryHouse;
   utilities: Utility[];
   utilitiesSelected: any[];
+  services: Services[];
+  servicesSelected: any[];
 
   constructor(private houseService: HouseService,
               private  router: Router,
@@ -38,8 +42,19 @@ export class CreateHouseComponent implements OnInit {
               private categoryHouseService: CategoryHouseService,
               private authenticationService: AuthenticationService,
               private userService: UserService,
-              private utilityService: UtilityService
+              private utilityService: UtilityService,
+              private servicesService: ServicesService
   ) {
+  }
+
+  private getServices() {
+    this.servicesService.getAll().subscribe(result => {
+      this.services = result;
+      console.log(this.services);
+    }, error => {
+      console.log("Lỗi service: ");
+      console.log(error);
+    })
   }
 
   prepareForm() {
@@ -54,7 +69,9 @@ export class CreateHouseComponent implements OnInit {
       gender: ['', [Validators.required]],
       rooms: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      utilities: this.fb.array([])
+      utilities: this.fb.array([]),
+      services: this.fb.array([])
+
     });
   }
 
@@ -74,7 +91,9 @@ export class CreateHouseComponent implements OnInit {
     this.prepareForm();
     this.getListCategoryHouse();
     this.getListUtility();
+    this.getServices();
     this.utilitiesSelected = [];
+    this.servicesSelected = [];
   }
 
   onCheckboxChange(e) {
@@ -84,6 +103,26 @@ export class CreateHouseComponent implements OnInit {
       checkArray.push(new FormControl(e.target.value));
       // @ts-ignore
       this.utilitiesSelected.push({idUtilitie: (new FormControl(e.target.value)).value});
+    } else {
+      let i: number = 0;
+      checkArray.controls.forEach((item: FormControl) => {
+        if (item.value == e.target.value) {
+          checkArray.removeAt(i);
+          return;
+        }
+        i++;
+      });
+    }
+  }
+
+  onCheckboxChange2(e) {
+    const checkArray: FormArray = this.createForm.get('services') as FormArray;
+
+    if (e.target.checked) {
+      checkArray.push(new FormControl(e.target.value));
+      // @ts-ignore
+      this.servicesSelected.push({idService: (new FormControl(e.target.value)).value});
+      console.log(this.servicesSelected);
     } else {
       let i: number = 0;
       checkArray.controls.forEach((item: FormControl) => {
@@ -118,7 +157,8 @@ export class CreateHouseComponent implements OnInit {
         link: ''
       }],
       imageUrls: this.arrayPicture,
-      utilities: this.utilitiesSelected
+      utilities: this.utilitiesSelected,
+      services: this.servicesSelected
     };
   }
 

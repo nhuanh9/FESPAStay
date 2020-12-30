@@ -80,11 +80,20 @@
           <input type="file" class="form-control" (change)="saveImg($event)">
         </div>
         <div class="text-left">
-          <label>Dịch vụ đi kèm</label>
+          <label>Dịch vụ đi kèm (có sẵn)</label>
         </div>
         <div  class="form-group text-left ">
           <label *ngFor="let data of utilities; let i=index">
             <input type="checkbox" class="ml-2" [value]="data.idUtilitie" (change)="onCheckboxChange($event)" />
+            {{data.name}}
+          </label>
+        </div>
+        <div class="text-left">
+          <label>Dịch vụ đi kèm (mất phí)</label>
+        </div>
+        <div  class="form-group text-left ">
+          <label *ngFor="let data of services; let i=index">
+            <input type="checkbox" class="ml-2" [value]="data.idService" (change)="onCheckboxChange2($event)" />
             {{data.name}}
           </label>
         </div>
