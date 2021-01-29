@@ -22,7 +22,8 @@ export class ListOrderComponent implements OnInit {
   orders: Order[];
   comments: CommentToRoom[];
   comment: CommentToRoom;
-
+  oneDay = 86400000;
+  currentTime = new Date();
   constructor(private orderService: OrderService,
               private  router: Router,
               private fb: FormBuilder,
@@ -39,5 +40,25 @@ export class ListOrderComponent implements OnInit {
       this.orders = result;
       console.log(result);
     })
+  }
+
+  deleteOrder(order) {
+    const orderTime = new Date(order.startDate);
+    const orderTimeSecond = orderTime.getTime() - this.currentTime.getTime();
+    console.log(orderTimeSecond - this.oneDay);
+    console.log(orderTimeSecond);
+    if (orderTimeSecond > this.oneDay || orderTimeSecond < 0) {
+      const id = order.idOrder;
+        this.orderService.delete(id).subscribe(() => {
+          alert('Thành Công!');
+          location.reload();
+        }, error => {
+          console.log('Loi! ' + error.toString());
+          alert('Thành Công!');
+          // location.reload();
+        });
+    } else {
+      alert('Bạn không thể xoá đơn này do còn ít hơn 1 ngày!');
+    }
   }
 }

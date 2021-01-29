@@ -38,6 +38,7 @@ export class CreateOrderComponent implements OnInit {
   listOrder: Order[];
   services: Services[];
   servicesSelected: any[];
+  currentTime = new Date();
 
   constructor(private houseService: HouseService,
               private  router: Router,
@@ -60,15 +61,17 @@ export class CreateOrderComponent implements OnInit {
     this.getServices()
     this.servicesSelected = [];
   }
-  private  getServices() {
-    this.servicesService.getAll().subscribe( result => {
+
+  private getServices() {
+    this.servicesService.getAll().subscribe(result => {
       this.services = result;
       console.log(this.services);
-    },error => {
+    }, error => {
       console.log("Lỗi service: ");
       console.log(error);
     })
   }
+
   private getDetailHouse() {
     this.sub = this.activateRoute.paramMap.subscribe((paraMap: ParamMap) => {
       const id = paraMap.get('id');
@@ -79,6 +82,7 @@ export class CreateOrderComponent implements OnInit {
       });
     });
   }
+
   private getListHouseDay() {
     this.houseDayService.getAll().subscribe(result => {
       console.log(result)
@@ -126,24 +130,27 @@ export class CreateOrderComponent implements OnInit {
 
   createOrder() {
     this.setNewOrder();
-    console.log(this.order);
     let flag = true;
     let newOrder = this.order;
-    let orderService = this.orderService;
     this.orderService.getAll().subscribe(result => {
       result.forEach(function (value) {
-        if (newOrder.house.idHouse == value.house.idHouse && (newOrder.startDate < value.startDate || newOrder.endDate < value.startDate || newOrder.startDate < value.endDate || newOrder.endDate < value.endDate)) {
+        if (newOrder.house.idHouse == value.house.idHouse &&
+          (newOrder.startDate < value.startDate || newOrder.endDate < value.startDate
+            || newOrder.startDate < value.endDate || newOrder.endDate < value.endDate)) {
           flag = false;
         }
-
       })
       if (flag) {
-        this.orderService.createOrder(this.order).subscribe(() => {
-          alert("Tạo hoá đơn thành công!");
-          this.router.navigate(['/user/house/orders']);
-        }, error => {
-          console.log("Lỗi: " + error);
-        });
+        if (this.order.endDate < this.order.startDate) {
+          alert("Vui lòng chọn ngày bắt đầu thuê nhỏ hơn ngày kết thúc!");
+        } else {
+          this.orderService.createOrder(this.order).subscribe(() => {
+            alert("Tạo hoá đơn thành công!");
+            this.router.navigate(['/user/house/orders']);
+          }, error => {
+            console.log("Lỗi: " + error);
+          });
+        }
       } else {
         alert("Đã có người đặt nhà trong khoảng thời gian: " + this.order.startDate + " đến: " + this.order.endDate + ", vui lòng chọn thời gian khác hoặc nhà phù hợp hơn!");
       }
